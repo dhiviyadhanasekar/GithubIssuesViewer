@@ -1,0 +1,1 @@
+console.error("Error: Parsing file /Users/dhiviyad/MyApps/GithubIssuesViewer/main.jsx: Unexpected token (6:12)");
