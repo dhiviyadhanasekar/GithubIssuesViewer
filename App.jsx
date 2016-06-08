@@ -1,10 +1,11 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
+var Test = require('./src/javascript/Test');
 var App = module.exports = React.createClass({
-    displayName: 'HelloReact',
+    displayName: 'App',
     render: function(){
-        return <div>Hello React</div>
+        return <Test />;
     }
 })
 
-ReactDOM.render(<App />, document.getElementById('example'))
+ReactDOM.render(<App />, document.getElementById('content'))
