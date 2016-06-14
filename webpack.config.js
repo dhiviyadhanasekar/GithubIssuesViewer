@@ -6,7 +6,6 @@ module.exports = {
       path: './assets',
       filename: "bundle.js",
       publicPath: 'http://localhost:8090/assets'
-
   },
   resolve: {
       extensions: ['', '.js', '.jsx'],
