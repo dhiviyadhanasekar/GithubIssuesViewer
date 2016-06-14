@@ -1,6 +1,9 @@
 var Test = module.exports = React.createClass({
     displayName: 'TestHelloReact',
+    componentDidMount: function(){
+        console.log(ReactDOM.findDOMNode(this.refs.test));
+    },
     render: function(){
-        return <div>Test jsx fiakjnrfrfkjwle loading...</div>
+        return <div ref='test'>Test jsx ... jbjdb</div>
     }
 })

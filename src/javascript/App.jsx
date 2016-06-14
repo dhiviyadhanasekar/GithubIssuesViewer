@@ -1,9 +1,11 @@
-var React = require('react');
-var ReactDOM = require('react-dom');
-var Test = require('./src/javascript/Test');
+React = require('react');
+ReactDOM = require('react-dom');
+
+var Test = require('./Test');
 var App = module.exports = React.createClass({
     displayName: 'App',
     render: function(){
+        console.debug('env', process.env.NODE_ENV);
         return <Test />;
     }
 })

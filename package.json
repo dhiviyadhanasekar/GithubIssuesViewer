@@ -5,30 +5,33 @@
   "main": "index.js",
   "dependencies": {
     "babel": "^6.5.2",
-    "babel-core": "^6.9.1",
-    "babel-loader": "^6.2.4",
-    "babel-preset-es2015": "^6.9.0",
-    "babel-preset-react": "^6.5.0",
     "react": "^15.1.0",
     "react-dom": "^15.1.0",
     "react-router": "^2.4.1",
     "underscore": "^1.8.3",
-    "webpack": "^1.13.1",
-    "webpack-dev-server": "^1.14.1"
+    "webpack": "^1.13.1"
   },
   "engines": {
     "node": ">= 0.10"
   },
   "devDependencies": {
+    "babel-core": "^6.9.1",
+    "babel-loader": "^6.2.4",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-react": "^6.5.0",
     "http-server": "^0.9.0",
-    "jsx-loader": "^0.13.2"
+    "jsx-loader": "^0.13.2",
+    "webpack-dev-server": "^1.14.1"
   },
   "scripts": {
     "start": "npm run serve | npm run dev",
     "serve": "./node_modules/.bin/http-server -p 8080",
-    "dev": "webpack-dev-server --progress --colors --port 8090",
-    "build": "webpack --progress --colors"
+    "dev": "NODE_ENV=development webpack-dev-server --progress --colors --inline --port 8090",
+    "build": "webpack --progress --colors",
+    "prod-build": "NODE_ENV=production webpack -p --config ./webpack.production.config.js"
   },
   "author": "Dhiviya Dhanasekar",
   "license": "ISC"
 }
+
+
