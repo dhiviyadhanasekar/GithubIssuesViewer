@@ -1,12 +1,16 @@
 var webpack = require('webpack');
 module.exports = {
-  entry: './App.jsx',
+  entry: ['./src/javascript/App.jsx'],
   output: {
-      path: './build',
+      path: './assets',
       filename: "bundle.js",
   },
   resolve: {
-      extensions: ['', '.js', '.jsx']
+      extensions: ['', '.js', '.jsx'],
+      modulesDirectories: ['node_modules'], //files in these directory can be required without a relative path
+      alias: {
+          "react": "React"
+        }
   },
   module: {
     loaders: [
@@ -22,7 +26,10 @@ module.exports = {
         //tell webpack to use jsx-loader for all *.jsx files
         test: /\.jsx$/,
         exclude: /node_modules/,
-        loader: 'jsx-loader?insertPragma=React.DOM&harmony'
+        loader: 'jsx-loader?insertPragma=React.DOM&harmony',
+        query: {
+          presets: ['es2015', 'react']
+        }
     }]
   },
   plugins:[

@@ -1,23 +1,8 @@
-// var definePlugin = new webpack.DefinePlugin({
-//   __DEV__: JSON.stringify(JSON.parse(process.env.NODE_ENV==development || 'true'))
-// });
-
-// const plugins = [ 
-//   new webpack.ProvidePlugin({ 
-//       $: ‘jquery’, 
-//       jQuery: ‘jquery’, 
-//       ‘window.jQuery’: ‘jquery’, 
-//       React: ‘react’, 
-//       paper: ‘paper’ 
-//     })
-// ];
-//   plugins: [definePlugin]
-
 var webpack = require('webpack');
 module.exports = {
   entry: ['./src/javascript/App.jsx'],
   output: {
-      path: './build',
+      path: './assets',
       filename: "bundle.js",
       publicPath: 'http://localhost:8090/assets'
 

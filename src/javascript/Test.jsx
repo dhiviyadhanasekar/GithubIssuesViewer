@@ -4,6 +4,6 @@ var Test = module.exports = React.createClass({
         console.log(ReactDOM.findDOMNode(this.refs.test));
     },
     render: function(){
-        return <div ref='test'>Test jsx ... jbjdb</div>
+        return <div ref='test'>Test jsx ... jfdjwefij 2ejfj2</div>
     }
 })
