@@ -1,15 +1,18 @@
 var webpack = require('webpack');
+var path = require('path');
 module.exports = {
-  entry: ['./src/javascript/App.jsx'],
+  entry: ['./src/components/app.jsx'],
   output: {
       path: './assets',
       filename: "bundle.js",
   },
   resolve: {
       extensions: ['', '.js', '.jsx'],
+      root: path.resolve(__dirname),
       modulesDirectories: ['node_modules'], //files in these directory can be required without a relative path
       alias: {
-          "react": "React"
+          "react": "React",
+          components: 'src/components'
         }
   },
   module: {

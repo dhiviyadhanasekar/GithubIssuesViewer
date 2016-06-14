@@ -1,7 +1,7 @@
 React = require('react');
 ReactDOM = require('react-dom');
 
-var Test = require('./Test');
+var Test = require('components/Test');
 var App = module.exports = React.createClass({
     displayName: 'App',
     render: function(){
