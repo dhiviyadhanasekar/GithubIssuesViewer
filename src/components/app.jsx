@@ -1,5 +1,6 @@
 React = require('react');  
 ReactDOM = require('react-dom');
+Stylesheet = require('../stylesheets/app.scss');
 
 var Route = require('react-router').Route;
 var Router = require('react-router').Router;
@@ -10,23 +11,22 @@ var useRouterHistory = require('react-router').useRouterHistory;
 const appHistory = useRouterHistory(createHashHistory)({ queryKey: false }) 
 
 var counter = 0;
-var Test = require('components/Test');
+var IssuesViewer = require('components/issues_viewer/issues_viewer');
 
-var App = module.exports = React.createClass({
-    displayName: 'App',
+var AppRouter = React.createClass({
+    displayName: 'AppRouter',
     render: function(){
         console.debug('env', process.env.NODE_ENV);
-        // return (<RouteHandler />); //<Test />;
         return ( <Router key={ counter } history={appHistory}>
-                    <Route path="/" component={Test}>
-                      <IndexRoute component={Test}/>
-                      <Route path={'/issues'} component={Test}/>
+                    <Route path="/" component={IssuesViewer}>
+                      <IndexRoute component={IssuesViewer}/>
+                      <Route path={'/issues'} component={IssuesViewer}/>
                     </Route>
                 </Router>);
     }
-})
+});
 
-ReactDOM.render(<App />, document.getElementById('content'));
+ReactDOM.render(<AppRouter />, document.getElementById('content'));
 
 if (module.hot) {
     counter++;

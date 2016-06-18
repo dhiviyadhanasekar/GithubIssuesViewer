@@ -1,5 +1,6 @@
 var webpack = require('webpack');
 var path = require('path');
+
 module.exports = {
   entry: ['./src/components/app.jsx'],
   output: {
@@ -21,26 +22,25 @@ module.exports = {
     {
       test: /\.js$/,
       exclude: /node_modules/,
-      loader: 'babel',
+      loader: ['react-hot', 'babel'],
       query: {
         presets: ['es2015', 'react']
       }
-    },   
-    {
+    },{
         //tell webpack to use jsx-loader for all *.jsx files
         test: /\.jsx$/,
         exclude: /node_modules/,
-        loader: 'jsx-loader?insertPragma=React.DOM&harmony',
+        loader: ['jsx-loader?insertPragma=React.DOM&harmony'],
         query: {
           presets: ['es2015', 'react']
         }
+    },{
+        test: /\.scss$/,
+        exclude: /node_modules/,
+        loaders: ["style", "css", "sass"]
     }]
   },
   plugins:[
-      new webpack.DefinePlugin({
-        'process.env':{
-          'NODE_ENV': JSON.stringify('development')
-        }
-      })
+      new webpack.DefinePlugin({ 'process.env':{ 'NODE_ENV': JSON.stringify('development') } })
     ]
 }
