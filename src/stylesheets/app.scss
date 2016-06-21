@@ -1,10 +1,13 @@
+
 @import "_variables.scss";
 
-body{
+body, html{
   font: $fontweight-normal $fontsize-body $font-stack;
   line-height: $fontsize-body * $baseline;
   color: $black;
   background: $graylightest;
+  margin: 0;
+  padding:0;
 }
 
 h1, .h1{
@@ -44,29 +47,96 @@ h6, .h6 {
   background-color: $graylightest;
 }
 
-
 .round{
   border-radius: 3px;
 }
 
-._toast_container{
+
+/*********************************
+  SPACING, POSITION
+**********************************/
+.flex{
+  display: flex;
+  display: -webkit-flex;
+}
+
+.relative{
+  position: relative;
+}
+
+.fixed{
   position: fixed;
-  top: 8%;
-  right: 1%;
-  background: transparent;
-  z-index: 9999;
-  max-width: 10%;
-  ._toast_message{
-    padding: 10px;
-    margin-bottom: 30px;
-    width: auto;
-    text-align: center;
-    background: $black;
-    color: $white;
-    font-weight: 300;
-    border-radius: 5%;
+}
+
+.absolute{
+  position: absolute;
+}
+
+.full_width{
+  width: 100%;
+}
+
+.u-full-width{
+  @extend .full_width;
+  box-sizing: border-box;
+}
+
+.padding_40_vertical{
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+.padding_40_horizontal{
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+/*********************************
+  INPUTS
+**********************************/
+.input_normal{
+  border: none;
+  &:focus{
+    border-bottom: 1px solid $darkpurple;
   }
 }
+
+.content_editable {
+  @extend .input_normal;
+  outline: none;
+  height: 17.55px;
+  width: auto !important;
+  padding-right: 2px !important;
+  padding-bottom: 0 !important;
+  &:focus{
+    white-space: normal;
+  }
+}
+
+.content_editable:empty:before{
+  content: attr(placeholder);
+  display: block; /* For Firefox */
+  padding-right: 2px !important;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  &:hover{
+    cursor: text;
+  }
+}
+
+
+.content_editable:focus:empty:before{
+  content: "";
+  display: block; /* For Firefox */
+  margin-top: 19px; /* To make sure the border doesn't go up */
+  min-width: 90px !important;
+}
+
+
+/*********************************
+  CUSTOM
+**********************************/
+
 
 
 

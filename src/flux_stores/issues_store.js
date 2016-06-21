@@ -11,13 +11,17 @@ var IssuesViewerData = {
   countPerPage: 25
 }
 
+function getCopy(obj){
+  return JSON.parse(JSON.stringify(obj));
+}
+
 var IssuesStore =  module.exports.IssuesStore = Object.assign({}, BaseStore, {
 
     getProp: function(prop){
-      return JSON.parse(JSON.stringify( IssuesViewerData[prop] ));
+      return getCopy( IssuesViewerData[prop] );
     },
     getAllData: function(){
-        return JSON.parse(JSON.stringify(IssuesViewerData));
+        return getCopy(IssuesViewerData);
     },
 
 });

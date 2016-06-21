@@ -15,7 +15,8 @@ module.exports = {
       modulesDirectories: ['node_modules'], //files in these directory can be required without a relative path
       alias: {
           "react": "React",
-          components: 'src/components'
+          components: 'src/components',
+          src: 'src'
         }
   },
   module: {
@@ -44,6 +45,10 @@ module.exports = {
             'style', // backup loader when not building .css file
             'css!sass' // loaders to preprocess CSS
         )
+    },{
+        test: /\.png$/,
+        loader: "url-loader",
+        query: { mimetype: "image/png" }
     }]
   },
   plugins:[

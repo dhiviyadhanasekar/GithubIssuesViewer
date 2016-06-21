@@ -14,7 +14,8 @@ module.exports = {
       modulesDirectories: ['node_modules'], //files in these directory can be required without a relative path
       alias: {
           "react": "React", //loads react globally
-          components: 'src/components'
+          components: 'src/components',
+          src: 'src'
         }
   },
   module: {
@@ -38,6 +39,10 @@ module.exports = {
         test: /\.scss$/,
         exclude: /node_modules/,
         loaders: ["style", "css", "sass"]
+    },{
+        test: /\.png$/,
+        loader: "url-loader",
+        query: { mimetype: "image/png" }
     }]
   },
   plugins:[
