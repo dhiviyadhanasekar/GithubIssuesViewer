@@ -1,5 +1,73 @@
+@import "_variables.scss";
+
+body{
+  font: $fontweight-normal $fontsize-body $font-stack;
+  line-height: $fontsize-body * $baseline;
+  color: $black;
+  background: $graylightest;
+}
+
+h1, .h1{
+  font-size: $fontsize-h1;
+  line-height: $fontsize-h1 * $baseline;
+  font-weight: $fontweight-slim;
+}
+
+h2, .h2{
+  font-size: $fontsize-h2;
+  line-height: $fontsize-h2 * $baseline;
+  font-weight: $fontweight-normal;
+}
+
+h3, .h3{
+  font-size: $fontsize-h3;
+  line-height: $fontsize-h3 * $baseline;
+  font-weight: $fontweight-bold;
+  letter-spacing: 1.08px;
+  text-transform: uppercase;
+}
+
+h6, .h6 {
+  font-size: $fontsize-small;
+  line-height: $fontsize-small * $baseline;
+  font-weight: $fontweight-normal;
+}
+
+/*********************************
+  BACKGROUNDS
+**********************************/
+.white_background{
+  background-color: $white;
+}
+
+.graylightest_background{
+  background-color: $graylightest;
+}
+
+
 .round{
   border-radius: 3px;
 }
+
+._toast_container{
+  position: fixed;
+  top: 8%;
+  right: 1%;
+  background: transparent;
+  z-index: 9999;
+  max-width: 10%;
+  ._toast_message{
+    padding: 10px;
+    margin-bottom: 30px;
+    width: auto;
+    text-align: center;
+    background: $black;
+    color: $white;
+    font-weight: 300;
+    border-radius: 5%;
+  }
+}
+
+
 
 
