@@ -7,7 +7,7 @@ var IssuesViewer = module.exports = React.createClass({
     },
     componentDidMount: function(){
         // console.log(ReactDOM.findDOMNode(this.refs.test));
-        console.debug('this.state', this.state);
+        console.log('this.state', this.state);
         
     },
     render: function(){

@@ -1,0 +1,1 @@
+var IssuesDispatcher = require('src/dispatchers/AppDispatcher');

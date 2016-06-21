@@ -2,7 +2,7 @@ React = require('react');
 ReactDOM = require('react-dom');
 Stylesheet = require('../stylesheets/app.scss');
 $ = require('jquery');
-IssuesStore = require('./../flux_stores/issues_store').IssuesStore;
+IssuesStore = require('src/stores/issues_store').IssuesStore;
 
 var AppRouter = require('./router/app_router');
 var counter = 0;
