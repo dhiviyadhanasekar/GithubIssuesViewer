@@ -8,8 +8,8 @@ var Header = module.exports = React.createClass({
         height: 56,
         zIndex: 998,
       }
-      return <div className='white_background full_width' style={style}>
-                <img src={GithubLogo} alt="Mountain View" style={{width:24,height:24}} />
+      return <div data-testId='header' className='white_background full_width flex' style={style}>
+                <img src={GithubLogo} alt="Github Logo" style={{width:24,height:24}} />
             </div>
     }
 });
