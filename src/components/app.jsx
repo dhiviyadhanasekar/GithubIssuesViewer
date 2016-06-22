@@ -1,8 +1,9 @@
 React = require('react');  
 ReactDOM = require('react-dom');
-Stylesheet = require('../stylesheets/app.scss');
+Stylesheet = require('src/stylesheets/app.scss');
 $ = require('jquery');
-IssuesStore = require('src/stores/issues_store').IssuesStore;
+IssuesViewStore = require('src/stores/issues_view_store').IssuesViewStore;
+validObject = require('src/utils/validity_util').validObject;
 
 var AppRouter = require('./router/app_router');
 var counter = 0;

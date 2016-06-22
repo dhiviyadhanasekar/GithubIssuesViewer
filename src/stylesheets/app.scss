@@ -1,5 +1,8 @@
 
 @import "_variables.scss";
+@import "third_party/skeleton.scss";
+@import "spacings.scss";
+@import url("https://fonts.googleapis.com/css?family=Roboto:100,300,700,100italic,300italic,700italic");
 
 body, html{
   font: $fontweight-normal $fontsize-body $font-stack;
@@ -36,6 +39,14 @@ h6, .h6 {
   font-weight: $fontweight-normal;
 }
 
+.bold{
+  font-weight: $fontweight-bold
+}
+
+.placeholder{
+  color: $graylight !important
+}
+
 /*********************************
   BACKGROUNDS
 **********************************/
@@ -47,36 +58,13 @@ h6, .h6 {
   background-color: $graylightest;
 }
 
+.redlightest_background{
+  background-color: $redlightest;
+}
+
 .round{
   border-radius: 3px;
 }
-
-
-/*********************************
-  SPACING, POSITION
-**********************************/
-.flex{
-  display: flex;
-  display: -webkit-flex;
-}
-
-.relative{
-  position: relative;
-}
-
-.fixed{
-  position: fixed;
-}
-
-.absolute{
-  position: absolute;
-}
-
-.full_width{
-  width: 100%;
-}
-
-
 
 /*********************************
   INPUTS

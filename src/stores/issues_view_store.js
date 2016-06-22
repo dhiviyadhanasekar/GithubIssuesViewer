@@ -1,4 +1,5 @@
-var IssuesDispatcher = require('src/dispatchers/issues_dispatcher');
+const IssuesViewEvents = require('src/app_constants/IssuesViewEvents'); 
+var IssuesViewDispatcher = require('src/dispatchers/issues_view_dispatcher');
 var ServerAPI = require('./server_api');
 var BaseStore = require('./base_store');
 
@@ -7,15 +8,17 @@ var IssuesViewerData = {
   repoUser: 'npm',
   repoName: 'npm',
   issuesList: [],
+  current_page: 0,
+  last_page: 0,
+  errorMessage: null,
   currentUser: null,
-  countPerPage: 25
 }
 
 function getCopy(obj){
   return JSON.parse(JSON.stringify(obj));
 }
 
-var IssuesStore =  module.exports.IssuesStore = Object.assign({}, BaseStore, {
+var IssuesViewStore =  module.exports.IssuesViewStore = Object.assign({}, BaseStore, {
 
     getProp: function(prop){
       return getCopy( IssuesViewerData[prop] );
@@ -26,11 +29,11 @@ var IssuesStore =  module.exports.IssuesStore = Object.assign({}, BaseStore, {
 
 });
 
-var IssuesStoreOperations = {
+var IssuesViewStoreOperations = {
 
 }
 
-IssuesDispatcher.register(function(action) {
+IssuesViewDispatcher.register(function(action) {
 
   console.debug('action ------- ', action);
 

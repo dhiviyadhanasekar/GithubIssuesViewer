@@ -1,0 +1,8 @@
+1. server base route + use browser history
+2. check what happens if i am not logged into github
+3. oauth implementation
+4. mocha integration tests
+5. change username and orgname search => enter and button
+6. take username and orgname , pagenumber from url
+7. modal for issue display
+8. page not found styling

@@ -1,5 +1,20 @@
 var ContentEditableDiv = module.exports = React.createClass({
+
   displayName: 'ContentEditableDiv',
+
+  propTypes: {
+    placeholder: React.PropTypes.string,
+    class: React.PropTypes.string,
+    isEditableByUser: React.PropTypes.bool,
+    id: React.PropTypes.any,
+    onKeyDown: React.PropTypes.func,
+    handleKeyPress: React.PropTypes.func,
+    onMouseDown: React.PropTypes.func,
+    onBlur: React.PropTypes.func,
+    style: React.PropTypes.object,
+    text: React.PropTypes.string
+  },
+
   handleKeyPress: function(e){
 
     e.stopPropagation();
