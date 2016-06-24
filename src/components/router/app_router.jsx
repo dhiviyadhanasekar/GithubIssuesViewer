@@ -14,9 +14,10 @@ var AppRouter = module.exports = React.createClass({
     displayName: 'AppRouter',
     render: function(){
         return ( <Router key={ this.props.counter } history={appHistory}>
-                    <Route path="/gitissues" component={IssuesViewer}>
+                    <Route path="/" component={IssuesViewer}>
                       <IndexRoute component={IssuesViewer}/>
-                      <Route path={'/gitissues/:repoUser/:repoName/issues'} component={IssuesViewer}/>
+                      <Route path={'/gitissues'} component={IssuesViewer}/>
+                      <Route name='full_url' path={'/gitissues/:repoUser/:repoName/issues'} component={IssuesViewer}/>
                     </Route>
                     <Route path="*" component={PageNotFound} />
                 </Router>);

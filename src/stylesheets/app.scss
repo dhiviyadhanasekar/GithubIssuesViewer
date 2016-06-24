@@ -1,6 +1,7 @@
 
 @import "_variables.scss";
 @import "third_party/skeleton.scss";
+@import "shadows.scss";
 @import "spacings.scss";
 @import url("https://fonts.googleapis.com/css?family=Roboto:100,300,700,100italic,300italic,700italic");
 
@@ -44,7 +45,20 @@ h6, .h6 {
 }
 
 .placeholder{
-  color: $graylight !important
+  color: $graylight !important;
+  -moz-placeholder:          { color: $graylight; } // Firefox
+  -ms-input-placeholder:       { color: $graylight; } // Internet Explorer 10+
+  -webkit-input-placeholder:  { color: $graylight; } // Safari and Chrome
+}
+
+.small{
+  font-size: $fontsize-small;
+  line-height: $fontsize-small * $baseline;
+}
+
+.verysmall{
+  font-size: $fontsize-smallest;
+  line-height: $fontsize-smallest * $baseline;
 }
 
 /*********************************

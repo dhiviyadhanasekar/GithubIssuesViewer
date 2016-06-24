@@ -1,3 +1,5 @@
+getKeyCode = require('src/utils/utils').getKeyCode;
+
 var ContentEditableDiv = module.exports = React.createClass({
 
   displayName: 'ContentEditableDiv',

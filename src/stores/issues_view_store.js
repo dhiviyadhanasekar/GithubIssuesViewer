@@ -10,7 +10,7 @@ var IssuesViewerData = {
   issuesList: [],
   current_page: 0,
   last_page: 0,
-  errorMessage: null,
+  errorMessage: 'jkbcjke',
   currentUser: null,
 }
 
@@ -30,7 +30,10 @@ var IssuesViewStore =  module.exports.IssuesViewStore = Object.assign({}, BaseSt
 });
 
 var IssuesViewStoreOperations = {
-
+    initData: function(routerParams){
+        IssuesViewerData.repoUser = routerParams.repoUser;
+        IssuesViewerData.repoName = routerParams.repoName;
+    },
 }
 
 IssuesViewDispatcher.register(function(action) {
@@ -39,6 +42,11 @@ IssuesViewDispatcher.register(function(action) {
 
   var data = action.data;
   switch(action.actionType) {
+    
+    case IssuesViewEvents.INIT_DATA:
+      IssuesViewStoreOperations.initData(data.routerParams);
+      break;
+
     default: break;
   }
 });

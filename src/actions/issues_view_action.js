@@ -1,12 +1,17 @@
 var IssuesViewDispatcher = require('src/dispatchers/issues_view_dispatcher');
-const IssuesViewEvents = require('src/app_constants/IssuesViewEvents'); 
 var IssuesViewAction = module.exports = {
 
+    initData: function(routerParams){
+        IssuesViewDispatcher.dispatch({
+          actionType: IssuesViewEvents.INIT_DATA,
+          data: { routerParams: routerParams }
+        }); 
+    },
+
     fetchIssues: function(){
-       IssuesDispatcher.dispatch({
+       IssuesViewDispatcher.dispatch({
          actionType: IssuesViewEvents.UPDATE_DATA,
          data: {  }
        }); 
     },
-
 }

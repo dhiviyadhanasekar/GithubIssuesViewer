@@ -9,7 +9,7 @@ var Header = module.exports = React.createClass({
         zIndex: 998,
       }
       return <div data-id='header' 
-                  className='white_background full_width flex row flex_center relative padding_40_left padding_40_right justify_sides' 
+                  className='white_background flex row flex_center relative padding_40_left padding_40_right justify_sides z2' 
                   style={style}>
                 <img src={GithubLogo} alt="Github Logo" style={{width:40,height:40}} className=''/>
                 <div className='bold inline_flex margin_auto_right margin_30_left'>
