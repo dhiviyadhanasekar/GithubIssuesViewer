@@ -1,7 +1,7 @@
 var Header = require('./header');
 var Body = require('./body');
 
-var IssuesViewer = module.exports = React.createClass({
+var IssuesViewer = React.createClass({
     
     displayName: 'IssuesViewer',
     
@@ -10,7 +10,6 @@ var IssuesViewer = module.exports = React.createClass({
     },
 
     getInitialState: function(){
-        this.updateDefaultUrl(this.props);
         return IssuesViewStore.getAllData();
     },
 
@@ -24,7 +23,7 @@ var IssuesViewer = module.exports = React.createClass({
                     && props.params.repoName == IssuesViewStore.getProp('repoName') )
                 return false;
 
-                IssuesViewAction.initData(props.params);
+                store.dispatch(IssuesViewAction.initData(props.params));
         }
         return true;
 
@@ -42,22 +41,25 @@ var IssuesViewer = module.exports = React.createClass({
     },
    
     componentWillReceiveProps: function(nextProps){
+        console.debug('store...', store.getState());
         console.debug('nextprops', nextProps);
         if(this.updateDefaultUrl(nextProps)=== true) this.updateState();
+        console.debug('store...', store.getState());
     },
    
     componentWillMount: function(){
+        this.updateDefaultUrl(this.props);
     },
    
     componentDidMount: function(){
         // console.log(ReactDOM.findDOMNode(this.refs.test));
         // console.debug('this.state', this.state);
         // console.debug('this.props', this.props);
-        IssuesViewStore.addChangeListener(IssuesViewEvents.UPDATE_DATA, this.updateState);
+        // IssuesViewStore.addChangeListener(IssuesViewEvents.UPDATE_DATA, this.updateState);
     },
 
     componentWillUnmount: function() {
-        IssuesViewStore.removeChangeListener(IssuesViewEvents.UPDATE_DATA, this.updateState);
+        // IssuesViewStore.removeChangeListener(IssuesViewEvents.UPDATE_DATA, this.updateState);
         IssuesViewAction.initData({repoName: 'npm', repoUser: 'npm'});
     },
    
@@ -68,4 +70,7 @@ var IssuesViewer = module.exports = React.createClass({
                 </div>
 
     }
-})
+});
+
+var mapStateToProps = function(state){ return {store:state}; };
+module.exports = ReactRedux.connect(mapStateToProps)(IssuesViewer);
