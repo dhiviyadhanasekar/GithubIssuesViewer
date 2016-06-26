@@ -60,7 +60,7 @@ var IssuesViewer = React.createClass({
 
     componentWillUnmount: function() {
         // IssuesViewStore.removeChangeListener(IssuesViewEvents.UPDATE_DATA, this.updateState);
-        IssuesViewAction.initData({repoName: 'npm', repoUser: 'npm'});
+        store.dispatch(IssuesViewAction.initData({repoName: 'npm', repoUser: 'npm'}));
     },
    
     render: function(){
