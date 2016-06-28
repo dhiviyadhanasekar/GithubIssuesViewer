@@ -15,4 +15,10 @@ var IssuesViewAction = module.exports = {
          data: { page: page }
        }); 
     },
+
+    resetData: function(){
+        IssuesViewDispatcher.dispatch({
+            actionType: IssuesViewEvents.RESET_DATA
+        });
+    },
 }

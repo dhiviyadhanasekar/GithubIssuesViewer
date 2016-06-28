@@ -11,12 +11,9 @@ var IssuesViewer = module.exports = React.createClass({
 
     needUpdateUrl: false,
     getInitialState: function(){
-        
         this.needUpdateUrl = this.doesUrlNeedUpdate(this.props);
         return IssuesViewStore.getAllData();
     },
-
-
 
     doesUrlNeedUpdate: function(props){
 
@@ -92,7 +89,7 @@ var IssuesViewer = module.exports = React.createClass({
 
     componentWillUnmount: function() {
         IssuesViewStore.removeChangeListener(IssuesViewEvents.UPDATE_DATA, this.updateState);
-        IssuesViewAction.initData({repoName: 'npm', repoUser: 'npm'}); //todo: create new reset fucntio
+        IssuesViewAction.resetData(); 
     },
    
     render: function(){

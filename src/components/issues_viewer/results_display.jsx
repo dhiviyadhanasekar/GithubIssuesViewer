@@ -1,7 +1,6 @@
 var IssuesCard = require('./issues_card');
 var Spinner = require('components/svg/spinner');
 var SearchResults = module.exports = React.createClass({
-    
 
     render: function(){
         var resultsLoading = validObject(IssuesViewStore.getProp('allIssuesAjaxCallXhr'));

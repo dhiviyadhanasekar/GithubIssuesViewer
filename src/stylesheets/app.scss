@@ -82,8 +82,21 @@ a:hover { text-decoration: underline; }
   background-color: $redlightest;
 }
 
+.white{
+  color: $white;
+}
+
+.gray{
+  color: $gray;
+}
+
+
 .round{
   border-radius: 3px;
+}
+
+.round_circle{
+  border-radius: 1000px;
 }
 
 /*********************************

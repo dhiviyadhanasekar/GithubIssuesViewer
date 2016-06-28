@@ -3,20 +3,24 @@ var IssuesViewDispatcher = require('src/dispatchers/issues_view_dispatcher');
 var ServerAPI = require('./server_api');
 var BaseStore = require('./base_store');
 
-
-var IssuesViewerData = {
-  repoUser: 'npm',
-  repoName: 'npm',
-  issuesList: require('test/mock_issues_data'),//[],
-  currentPage: 1,
-  lastPage: 1,
-  errorMessage: null,
-  allIssuesAjaxCallXhr: null,
-  currentIssueAjaxCallXhr: null,
-  isIssueModalOpen: false,
-  currentIssue: null,
-  currentIssueData: null,
+function copyOfInitData() {
+    var initData = {
+          repoUser: 'npm',
+          repoName: 'npm',
+          issuesList: require('test/mock_issues_data'),//[],
+          currentPage: 1,
+          lastPage: 1,
+          errorMessage: null,
+          allIssuesAjaxCallXhr: null,
+          currentIssueAjaxCallXhr: null,
+          currentIssue: null,
+          currentIssueData: null,
+          rateLimitRemaining: 60,
+    }
+    return initData;
 }
+
+var IssuesViewerData = copyOfInitData();
 var user = {
   accessToken: null
 }
@@ -71,6 +75,7 @@ var IssuesViewStoreOperations = {
 
         console.debug('result', result);
         IssuesViewerData.allIssuesAjaxCallXhr = null;
+        //todo: assign data for result & remainingLimit
         IssuesViewStore.emitChange(IssuesViewEvents.UPDATE_DATA);
 
     },
@@ -85,7 +90,18 @@ var IssuesViewStoreOperations = {
       else if(error.responseText) gitmessage = JSON.stringify(error.responseText);
 
       IssuesViewerData.errorMessage = statusText + gitmessage;
+      //todo: assign data for result & remainingLimit
       IssuesViewStore.emitChange(IssuesViewEvents.UPDATE_DATA);
+
+    },
+
+    resetData: function(){
+        
+        this.abortFetchData();
+        //todo: abort the fetchissuedetails ajax call too here
+        var copy = copyOfInitData();
+        copy.rateLimitRemaining = IssuesViewerData.rateLimitRemaining;
+        IssuesViewerData = copy;
 
     },
 }
@@ -102,12 +118,12 @@ IssuesViewDispatcher.register(function(action) {
   var data = action.data;
   switch(action.actionType) {
     
-    case IssuesViewEvents.INIT_DATA:
-      IssuesViewStoreOperations.initData(data.routerParams);
-      break;
+    case IssuesViewEvents.INIT_DATA: IssuesViewStoreOperations.initData(data.routerParams); break;
 
-    case IssuesViewEvents.UPDATE_DATA:
-        IssuesViewStoreOperations.fetchData(data.page);
+    case IssuesViewEvents.UPDATE_DATA: IssuesViewStoreOperations.fetchData(data.page); break;
+
+    case IssuesViewEvents.RESET_DATA: IssuesViewStoreOperations.resetData();break;
+
 
     default: break;
   }

@@ -426,6 +426,12 @@
   flex-direction: row;
 }
 
+.column{
+  @extend .flex;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+}
+
 .justify_center{
   justify-content: center;
 }
