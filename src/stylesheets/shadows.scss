@@ -1,23 +1,35 @@
 .z0{
   box-shadow: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
 }
 
 .z1{
   box-shadow: 0 1.5px 4px rgba(0,0,0,0.24),0 1.5px 6px rgba(0,0,0,0.12);
+  -webkit-box-shadow: 0 1.5px 4px rgba(0,0,0,0.24),0 1.5px 6px rgba(0,0,0,0.12);
+  -moz-box-shadow: 0 1.5px 4px rgba(0,0,0,0.24),0 1.5px 6px rgba(0,0,0,0.12);
 }
 
 .z2{
   box-shadow: 0 3px 12px rgba(0,0,0,0.23),0 3px 12px rgba(0,0,0,0.16);
+  -webkit-box-shadow: 0 3px 12px rgba(0,0,0,0.23),0 3px 12px rgba(0,0,0,0.16);
+  -moz-box-shadow: 0 3px 12px rgba(0,0,0,0.23),0 3px 12px rgba(0,0,0,0.16);
 }
 
 .z3{
   box-shadow: 0 6px 12px rgba(0,0,0,0.23),0 10px 40px rgba(0,0,0,0.19);
+  -webkit-box-shadow:0 6px 12px rgba(0,0,0,0.23),0 10px 40px rgba(0,0,0,0.19);
+  -moz-box-shadow: 0 6px 12px rgba(0,0,0,0.23),0 10px 40px rgba(0,0,0,0.19);
 }
 
 .z4{
   box-shadow: 0 10px 20px rgba(0,0,0,0.22),0 14px 56px rgba(0,0,0,0.25);
+  -webkit-box-shadow: 0 10px 20px rgba(0,0,0,0.22),0 14px 56px rgba(0,0,0,0.25);
+  -moz-box-shadow: 0 10px 20px rgba(0,0,0,0.22),0 14px 56px rgba(0,0,0,0.25);
 }
 
 .z5{
   box-shadow: 0 15px 24px rgba(0,0,0,0.22),0 19px 76px rgba(0,0,0,0.3);
+  -webkit-box-shadow: 0 15px 24px rgba(0,0,0,0.22),0 19px 76px rgba(0,0,0,0.3);
+  -moz-box-shadow: 0 15px 24px rgba(0,0,0,0.22),0 19px 76px rgba(0,0,0,0.3);
 }

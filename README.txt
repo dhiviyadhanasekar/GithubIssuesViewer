@@ -1,3 +1,5 @@
+A complete README summarizing your project and explaining how to run your app and your tests. Consider including any additional information you feel would be helpful to the reviewers (e.g. your overall approach, project scoping, etc.)
+
 Development Setup instructions
 1. Install npm  
 2. In terminal, navigate to root folder "GithubIssuesViewer/" and run "npm install" & "npm install --dev" (use sudo or sudo bash if necessary)

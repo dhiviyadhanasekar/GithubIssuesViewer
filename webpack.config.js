@@ -49,3 +49,8 @@ module.exports = {
       new webpack.DefinePlugin({ 'process.env':{ 'NODE_ENV': JSON.stringify('development') } })
     ]
 }
+
+// Client ID
+// 543a41e8cdf0ae24cfb4
+// Client Secret
+// 2ad8bfab87f9d86bdbede2db03e7550bfc11dbc9

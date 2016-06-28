@@ -1,9 +1,9 @@
-1. server base route + use browser history
-2. check what happens if i am not logged into github
+1. set query in url for page number, issue modal open
+2. 
 3. oauth implementation
 4. mocha integration tests
 5. change username and orgname search => enter and button, change url
-6. error message page styling
+6. 
 7. modal for issue display
 
 Tests
@@ -12,4 +12,4 @@ Tests
 3. on page load, fetch results and verify
 4. click paging => fetch results from those pages
 5. unauthorized repo => show error message
-6. 
+6. login 

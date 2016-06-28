@@ -40,6 +40,12 @@ h6, .h6 {
   font-weight: $fontweight-normal;
 }
 
+a { 
+  color: $blue; 
+  text-decoration: none;
+}
+a:hover { text-decoration: underline; }
+
 .bold{
   font-weight: $fontweight-bold
 }
@@ -119,6 +125,10 @@ h6, .h6 {
   display: block; /* For Firefox */
   margin-top: 19px; /* To make sure the border doesn't go up */
   min-width: 90px !important;
+}
+
+.pointer{
+  cursor: pointer
 }
 
 

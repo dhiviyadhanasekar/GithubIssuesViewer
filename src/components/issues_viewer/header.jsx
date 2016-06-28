@@ -3,6 +3,11 @@ var GithubLogo = require('src/images/Github-Mark.png');
 
 var Header = module.exports = React.createClass({
     displayName: 'Header',
+    renderLogin: function(){
+        <div className='margin_auto_left'>
+           
+        </div>
+    },
     render: function(){
       var style = {
         height: 56,
@@ -17,6 +22,7 @@ var Header = module.exports = React.createClass({
                     <div className='margin_10_left margin_10_right'>/</div>
                     <ContentEditableDiv class='placeholder' placeholder='Type Repo name here' text={IssuesViewStore.getProp('repoName')}/>
                 </div>
+                 {this.renderLogin()}
             </div>
     }
 });

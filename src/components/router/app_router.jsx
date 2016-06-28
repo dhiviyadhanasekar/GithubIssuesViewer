@@ -17,6 +17,7 @@ var AppRouter = module.exports = React.createClass({
                       <IndexRoute component={IssuesViewer}/>
                       <Route path={'/gitissues'} component={IssuesViewer}/>
                       <Route name='full_url' path={'/gitissues/:repoUser/:repoName/issues'} component={IssuesViewer}/>
+                      <Route name='issue_page' path={'/gitissues/:repoUser/:repoName/issues/:issueNumber'} component={IssuesViewer}/>
                     </Route>
                     <Route path="*" component={PageNotFound} />
                 </Router>);
