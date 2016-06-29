@@ -16,6 +16,7 @@ function copyOfInitData() {
           currentIssue: null,
           currentIssueData: null,
           rateLimitRemaining: 60,
+          rateLimit: 60,
     }
     return initData;
 }
@@ -119,12 +120,8 @@ IssuesViewDispatcher.register(function(action) {
   switch(action.actionType) {
     
     case IssuesViewEvents.INIT_DATA: IssuesViewStoreOperations.initData(data.routerParams); break;
-
     case IssuesViewEvents.UPDATE_DATA: IssuesViewStoreOperations.fetchData(data.page); break;
-
     case IssuesViewEvents.RESET_DATA: IssuesViewStoreOperations.resetData();break;
-
-
     default: break;
   }
 });

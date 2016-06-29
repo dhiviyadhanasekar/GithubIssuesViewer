@@ -3,6 +3,7 @@ ReactDOM = require('react-dom');
 Stylesheet = require('src/stylesheets/app.scss');
 $ = require('jquery');
 validObject = require('src/utils/utils').validObject;
+classnames = require('classnames');
 
 IssuesViewStore = require('src/stores/issues_view_store').IssuesViewStore;
 IssuesViewAction = require('src/actions/issues_view_action');

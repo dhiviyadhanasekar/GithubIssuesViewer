@@ -1,52 +1,31 @@
 var UserAvatar = module.exports = React.createClass({
+    
+    displayName: 'UserAvatar',
+
+    propTypes: {
+      user: React.PropTypes.object.isRequired
+    },
+    
     render: function(){
 
-      var colors = {
-        "a": "#1abc9c",
-        "b": "#16a085",
-        "c": "#f1c40f",
-        "d": "#f39c12",
-        "e": "#2ecc71",
-        "f": "#27ae60",
-        "g": "#c0392b",
-        "h": "#d35400",
-        "i": "#3498db",
-        "j": "#2980b9",
-        "k": "#e74c3c",
-        "l": "#c0392b",
-        "m": "#9b59b6",
-        "n": "#8e44ad",
-        "o": "#bdc3c7",
-        "p": "#34495e",
-        "q": "#2c3e50",
-        "r": "#95a5a6",
-        "s": "#7f8c8d",
-        "t": "#ec87bf",
-        "u": "#d870ad",
-        "v": "#f69785",
-        "w": "#9ba37e",
-        "x": "#b49255",
-        "y": "#b49255",
-        "z": "#a94136",
-        "default": "#16a085"
-      }
-
-      var dimensions = this.props.dimensions ? this.props.dimensions : 25;
-      var background = this.props.avatar ? "url(" + this.props.avatar + ")  repeat scroll 0% 0% / cover" : colors['a'];
+      var dimensions = this.props.dimensions ? this.props.dimensions : 30;
+      var url = this.props.user.avatar_url ? this.props.user.avatar_url : '/public_images/no_avatar.svg';
+      var background = "url(" + url + ")  repeat scroll 0% 0% / cover";
       var style = {
-        border: this.props.border,
+        border: '1px solid white',
         background: background,
         width: dimensions,
         height: dimensions,
-        fontSize: 25
+        fontSize: 25,
       }
 
       return (
-        <div style={this.props.inline? {top: '-15px'} : {}} className={this.props.inline ? 'inline_block relative margin_10_right' : 'relative'}>
-                 <div style={style} className="round_circle white flex align_center_vertical justify_center">
-                 </div>
-                 <div class>Name</div>
-        </div>
+        <a className=' flex_center two column margin_10_left gray pointer no_underline' href={this.props.user.html_url}>
+            <div style={style} className="round_circle white flex_center row" ></div>
+            <div className='verysmall flex_center row' style={{paddingTop: 2}}>
+              {this.props.user.login ? '@' + this.props.user.login : null}
+            </div>
+        </a>
       )
     }
 });
