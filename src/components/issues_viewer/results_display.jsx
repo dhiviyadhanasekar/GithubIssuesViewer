@@ -31,6 +31,6 @@ var SearchResults = module.exports = React.createClass({
             // return issueCards; //todo: remove this
         }
 
-        return  <div className='margin_30 full_height'>{issueCards}</div>;
+        return  <div className='margin_30 full_height auto_width'>{issueCards}</div>;
     }
 });

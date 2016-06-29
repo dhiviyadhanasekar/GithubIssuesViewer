@@ -148,6 +148,11 @@ a:hover { text-decoration: underline; }
   text-decoration: none !important;
 }
 
+.ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
 /*********************************
   CUSTOM
