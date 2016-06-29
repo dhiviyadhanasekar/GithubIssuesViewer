@@ -1,4 +1,4 @@
-var Link = require('react-router').Link;
+var IssueTitle = require('./issue_title');
 var ReporterAvatar = require('./reporter_avatar');
 
 var IssuesCard = module.exports = React.createClass({
@@ -10,9 +10,7 @@ var IssuesCard = module.exports = React.createClass({
     
     renderIssueNumberTitle: function(){
         return <div className='row padding_10_right'>
-                  <Link to={IssuesViewStore.getUrlPathName()+'/'+this.props.issue.number} className='bold pointer'>
-                    #{this.props.issue.number}
-                  </Link>
+                  <IssueTitle issue={this.props.issue}/>
                   <div className='padding_10_left'>{this.props.issue.title} {this.renderLabels()}</div>
                 </div>
     },

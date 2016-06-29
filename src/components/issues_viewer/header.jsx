@@ -12,7 +12,7 @@ var Header = module.exports = React.createClass({
       var style = {
         height: 56,
         zIndex: 998,
-        minWidth: 410,
+        minWidth: 400,
       }
       return <div data-id='header' 
                   className='white_background flex row flex_center relative padding_40_left padding_40_right justify_sides z2' 
