@@ -31,18 +31,32 @@ var modalStyles = {
 };
 
 var IssuePage = module.exports = React.createClass({
+    
     displayName: 'IssuePageModal',
+
+    contextTypes: {
+        router: React.PropTypes.object.isRequired
+    },
+
     getInitialState: function(){
       return {
         isModalOpen: validObject(IssuesViewStore.getProp('currentIssue'))
       }
     },
+
+    updateUrl: function(){
+        var pathName = IssuesViewStore.getUrlPathName();
+        this.context.router.push({
+            pathname: pathName,
+        });
+    },
     
     closeModal: function(){
       $('body').removeClass('disable_y_scroll');
       IssuesViewAction.closeIssuePage();
-      this.setState({ isModalOpen: false});
+      this.updateUrl();
     },
+    
     handleOnAfterOpenModal: function(){
         $('body').addClass('disable_y_scroll');
     },

@@ -146,6 +146,7 @@ var IssuesViewStoreOperations = {
 
     closeIssuePage: function(){
         this.abortFetchIssueData();
+        this.abortFetchComments();
         IssuesViewerData.currentIssue = null;
         IssuesViewerData.currentIssueData = null;
         IssuesViewerData.currentIssueErrorMessage = null;
