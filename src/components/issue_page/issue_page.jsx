@@ -1,6 +1,6 @@
 
 var ReactModal = require('react-modal');
-var Spinner = require('components/svg/spinner');
+var LoadingIndicator = require('components/lib/loading_indicator');
 
 
 var modalStyles = {
@@ -17,8 +17,8 @@ var modalStyles = {
   content : {
     position                   : 'absolute',
     top                        : '11%',//'35%',
-    left                       : '15%',
-    right                      : '15%',
+    left                       : '10%',
+    right                      : '10%',
     bottom                     : 'auto',
     background                 : '#fff',
     overflow                   : 'auto',
@@ -26,8 +26,7 @@ var modalStyles = {
     borderRadius               : '4px',
     outline                    : 'none',
     padding                    : '0',
-    minHeight                  : 600,
-    maxHeight                  : 600,
+    height                  : 500,
   }
 };
 
@@ -41,7 +40,7 @@ var IssuePage = module.exports = React.createClass({
     
     closeModal: function(){
       $('body').removeClass('disable_y_scroll');
-      IssuesViewAction.closeIssuePage.defer();
+      IssuesViewAction.closeIssuePage();
       this.setState({ isModalOpen: false});
     },
     handleOnAfterOpenModal: function(){
@@ -59,25 +58,22 @@ var IssuePage = module.exports = React.createClass({
     renderHeader: function(){
         var issueUrl = 'https://github.com/' + IssuesViewStore.getProp('repoUser')+ '/' + IssuesViewStore.getProp('repoName') +'/issues/' + IssuesViewStore.getProp('currentIssue');
 
-        return <div className='black_background white padding_10' style={{width: '100%', height: 'auto'}}>
+        return <div className='black_background white padding_10 relative row' style={{width: 'auto', height: 'auto'}}>
                     <a href={issueUrl} className='white'>
-                        #{IssuesViewStore.getProp('currentIssue')} 
-                        <span className='padding_10_left'>{this.getCurrentIssueDetails()}</span>
+                        <span>#{IssuesViewStore.getProp('currentIssue')}</span>
+                        <span className='padding_10_left no_underline'>{this.getCurrentIssueDetails('title')}</span>
                     </a> 
+                    <div className='margin_auto_left gray bold pointer' onClick={this.closeModal}>X</div>
                 </div>
     },
 
     renderBody: function(){
         var resultsLoading = validObject(IssuesViewStore.getProp('currentIssueAjaxCallXhr'));
         if(resultsLoading === true){
-          return <div className='round white_background padding_30 full_height inline_block' 
-                      style={{width: '80%'}}>
-                    <div className='flex_center margin_30_top'>Loading issue details...</div>
-                    <div className='flex_center' style={{height: 80}}><Spinner /></div>
-                </div>
+          return <LoadingIndicator klass='round white_background full_height full_width inline_block'/>
         }
 
-        return <div>contentjkebjwebjkbwekjVBewbvj</div>;
+        return <div className='padding_20'>contentjkebjwebjkbwekjVBewbvj</div>;
 
     },
 
@@ -90,7 +86,8 @@ var IssuePage = module.exports = React.createClass({
     },
     componentWillReceiveProps: function(){
       var newValue = validObject(IssuesViewStore.getProp('currentIssue'));
-      if(this.state.isModalOpen !== newValue) this.setState({ isModalOpen: newValue });
+      // if(this.state.isModalOpen !== newValue) 
+      this.setState({ isModalOpen: newValue });
     },
     render: function(){
         return <ReactModal isOpen={this.state.isModalOpen} 

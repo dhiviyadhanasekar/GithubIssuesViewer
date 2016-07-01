@@ -69,8 +69,8 @@ var IssuesViewer = module.exports = React.createClass({
     componentWillReceiveProps: function(nextProps, prevProps){
         console.debug('nextprops', nextProps);
         console.debug('prevProps', prevProps);
-        this.updateDefaultUrl(nextProps);
-        // if(this.updateDefaultUrl(nextProps)=== true) this.updateState();
+        var updateUrl = this.updateDefaultUrl(nextProps);
+        if(updateUrl === true) this.updateState();
     },
    
     componentWillMount: function(){

@@ -1,18 +1,15 @@
 var IssuesCard = require('./issues_card');
-var Spinner = require('components/svg/spinner');
+var LoadingIndicator = require('components/lib/loading_indicator');
 var SearchResults = module.exports = React.createClass({
 
     render: function(){
         var resultsLoading = validObject(IssuesViewStore.getProp('allIssuesAjaxCallXhr'));
         if(resultsLoading === true){
-          return
+            return(
               <div className='margin_30 flex_center full_height'> 
-                <div className='round white_background padding_30 full_height inline_block' 
-                      style={{width: '80%'}}>
-                    <div className='flex_center margin_30_top'>Loading issues...</div>
-                    <div className='flex_center' style={{height: 80}}><Spinner /></div>
-                </div>
-              </div>
+                <LoadingIndicator klass='round white_background padding_30 full_height inline_block' 
+                                    style={{width: '80%'}}/>
+              </div> );
         }
 
         var issues = IssuesViewStore.getProp('issuesList');
