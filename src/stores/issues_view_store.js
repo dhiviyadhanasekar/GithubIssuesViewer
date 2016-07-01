@@ -13,7 +13,7 @@ function copyOfInitData() {
           errorMessage: null,
           allIssuesAjaxCallXhr: null,
           
-          currentIssueAjaxCallXhr: {abort: function(){}},
+          currentIssueAjaxCallXhr: null,
           currentIssue: null,
           currentIssueErrorMessage: null,
           currentIssueData: null,

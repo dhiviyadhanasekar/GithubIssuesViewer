@@ -1,6 +1,7 @@
-
 var ReactModal = require('react-modal');
 var LoadingIndicator = require('components/lib/loading_indicator');
+var ReporterAvatar = require('components/issues_viewer/reporter_avatar');
+var MardownProcessor = require('src/utils/markdown_processor');
 
 
 var modalStyles = {
@@ -16,17 +17,18 @@ var modalStyles = {
   },
   content : {
     position                   : 'absolute',
-    top                        : '11%',//'35%',
+    top                        : '7%',//'35%',
     left                       : '10%',
     right                      : '10%',
     bottom                     : 'auto',
-    background                 : '#fff',
+    background                 : '#F5F6F7',
     overflow                   : 'auto',
     WebkitOverflowScrolling    : 'touch',
     borderRadius               : '4px',
     outline                    : 'none',
     padding                    : '0',
-    height                  : 500,
+    minHeight                  : 500,
+    height                     : 'auto',
   }
 };
 
@@ -53,10 +55,11 @@ var IssuePage = module.exports = React.createClass({
     
     closeModal: function(){
       $('body').removeClass('disable_y_scroll');
+      this.setState({isModalOpen: false});
       IssuesViewAction.closeIssuePage();
       this.updateUrl();
     },
-    
+
     handleOnAfterOpenModal: function(){
         $('body').addClass('disable_y_scroll');
     },
@@ -83,11 +86,23 @@ var IssuePage = module.exports = React.createClass({
 
     renderBody: function(){
         var resultsLoading = validObject(IssuesViewStore.getProp('currentIssueAjaxCallXhr'));
-        if(resultsLoading === true){
-          return <LoadingIndicator klass='round white_background full_height full_width inline_block'/>
+        var issue = IssuesViewStore.getProp('currentIssueData');
+        
+        if(resultsLoading === true || !validObject(issue)){
+          return <LoadingIndicator klass='round graylightest_background full_height full_width inline_block'/>
         }
 
-        return <div className='padding_20'>contentjkebjwebjkbwekjVBewbvj</div>;
+
+        return <div className='padding_10 width_auto full_height'>
+                  <div className='row'>
+                    <div className='margin_auto_right'>
+                      <ReporterAvatar user={issue.user} displayUserName={false} dimensions={50}/>
+                    </div>
+                    <div className='round white_background small padding_10 z2'>
+                        <div style={{wordWrap: 'break-word'}} dangerouslySetInnerHTML={{ __html: MardownProcessor.convertToHtml(issue.body) }}></div>
+                    </div>
+                  </div>
+               </div>;
 
     },
 

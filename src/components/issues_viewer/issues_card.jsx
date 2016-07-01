@@ -1,5 +1,6 @@
 var IssueTitle = require('./issue_title');
 var ReporterAvatar = require('./reporter_avatar');
+var Labels = require('./labels');
 
 
 var IssuesCard = module.exports = React.createClass({
@@ -18,31 +19,8 @@ var IssuesCard = module.exports = React.createClass({
                 </div>
     },
 
-
     renderLabels: function(){
-
-        var labelArray = [];
-        var labels = this.props.issue.labels;
-        var label = null;
-        
-        for(var i=0; i<labels.length; i++){
-              var label = labels[i];
-              var style = {
-                paddingTop: 3,
-                paddingBottom: 3,
-                paddingRight: 7,
-                paddingLeft: 7,
-                marginRight: 5,
-                background: '#' + label.color,
-              }
-              labelArray.push(
-                <div key={this.props.issue.id + '_' + 'label' + i} style={style} className='white round '>
-                  {label.name}
-                </div>
-              );
-        }
-
-        return <div className='row verysmall' style={{paddingTop: 2}}>{labelArray}</div>;
+        return <Labels issue={this.props.issue} />;
     },
 
     render: function(){

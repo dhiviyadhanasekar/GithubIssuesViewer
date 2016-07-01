@@ -11,8 +11,8 @@ var MarkdownProcessor = module.exports = {
 
   createCheckboxes: function(content){
 
-      var checkbox = '<input type="checkbox"></input>';
-      content = content.replace(/(^|\s|)(- \[ \]\s)/g, checkbox);
+      var checkbox = '$1<input type="checkbox"></input>$3';
+      content = content.replace(/(^|\s|)(- \[ \])(\s)/g, checkbox);
 
       var checkedCheckbox = '$1<input type="checkbox" checked="true">$3';
       content = content.replace(/(^|\s|)(- \[x\])(\s)/g, checkedCheckbox);
