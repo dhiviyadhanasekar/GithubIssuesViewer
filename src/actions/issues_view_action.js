@@ -21,4 +21,17 @@ var IssuesViewAction = module.exports = {
             actionType: IssuesViewEvents.RESET_DATA
         });
     },
+
+    closeIssuePage: function(){
+      IssuesViewDispatcher.dispatch({
+            actionType: IssuesViewEvents.CLOSE_ISSUE_PAGE
+      });
+    },
+
+    fetchIssueData: function(fetchIssueDta, fetchComments){
+      IssuesViewDispatcher.dispatch({
+          actionType: IssuesViewEvents.CLOSE_ISSUE_PAGE
+      });
+
+    },
 }

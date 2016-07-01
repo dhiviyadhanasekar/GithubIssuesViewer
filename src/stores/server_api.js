@@ -10,14 +10,35 @@ var ServerApi = module.exports = {
       url: githubApiUrl + '/repos/' + repo + '/issues?per_page='+ IssuesViewConstants.ISSUES_PER_PAGE +'&page='+ page,
       success: function(results){
           console.debug('result', results);
-          if(validObject(successCallback)) successCallback(results);
+          if(successCallback) successCallback(results);
 
       }, error: function(e){
           console.error('Error fetching github issues for repo', repo , ': ', e);
-          if(validObject(errorCallBack)) errorCallBack(e);
+          if(errorCallBack) errorCallBack(e);
       }
     });
   },
+  fetchIssueData: function(repoUser, repoName, issueNumber, successCallback, errorCallBack, fetchCommentsOnly){
+    var repo = repoUser + '/' + repoName;
+    var url = githubApiUrl + '/repos/' + repo + '/issues/' + issueNumber;
+    if(fetchCommentsOnly === true){
+      url += '/comments';
+    }
+
+    return $.ajax({
+      url: url,
+      success: function(results){
+          console.debug('result', results);
+          if(successCallback) successCallback(results);
+
+      }, error: function(e){
+          console.error('Error fetching github issue data for ', url , ': ', e);
+          if(errorCallBack) errorCallBack(e);
+      }
+    });
+  },
+
+   
   // initAuthentication: function(){
   //     $.ajax({
   //         url: 'https://github.com/login/oauth/authorize',

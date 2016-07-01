@@ -1,5 +1,6 @@
 var Header = require('./header');
 var Body = require('./body');
+var IssuePage = require('components/issue_page/issue_page');
 
 var IssuesViewer = module.exports = React.createClass({
     
@@ -17,7 +18,7 @@ var IssuesViewer = module.exports = React.createClass({
 
     doesUrlNeedUpdate: function(props){
 
-        console.debug('doesUrlNeedUpdate props', props);
+        // console.debug('doesUrlNeedUpdate props', props);
        
         var currentUrl = this.getUrlToSet();
         console.debug('newurl', currentUrl);
@@ -95,7 +96,8 @@ var IssuesViewer = module.exports = React.createClass({
     render: function(){
         return <div className='u-max-full-width relative'>
                     <Header />
-                    <Body />
+                    <Body /> 
+                    <IssuePage />
                 </div>
 
     }

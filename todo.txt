@@ -1,15 +1,18 @@
-1. set query in url for page number, issue modal open
-2. 
-3. oauth implementation
-4. mocha integration tests
-5. change username and orgname search => enter and button, change url
-6. 
-7. modal for issue display
+1. paging display
+2. oauth implementation
+3. mocha integration tests
+4. change username and orgname search => enter and button, change url
+5. modal for issue display
+6. fetch comments
+7. 
 
 Tests
 1. invalid url => page not found
 2. page not found, go to home => regular url
-3. on page load, fetch results and verify
+3. on page load, fetch results for npm/npm and verify (25 results, number of pages on paging div, )
 4. click paging => fetch results from those pages
 5. unauthorized repo => show error message
 6. login 
+7. on click issue, show modal
+8. on hover issue, show preview
+9. on click reporter, go to github url

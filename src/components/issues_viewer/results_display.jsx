@@ -7,7 +7,7 @@ var SearchResults = module.exports = React.createClass({
         if(resultsLoading === true){
           return
               <div className='margin_30 flex_center full_height'> 
-                <div className='round white_background padding_30 full_height  inline_block' 
+                <div className='round white_background padding_30 full_height inline_block' 
                       style={{width: '80%'}}>
                     <div className='flex_center margin_30_top'>Loading issues...</div>
                     <div className='flex_center' style={{height: 80}}><Spinner /></div>
@@ -27,8 +27,8 @@ var SearchResults = module.exports = React.createClass({
 
         var issueCards = [];
         for(var i=0; i<issues.length; i++){
+            // if(issues[i].number == 13156)
             issueCards.push(<IssuesCard issue={issues[i]} key={'issue_card_'+i}/>);
-            // return issueCards; //todo: remove this
         }
 
         return  <div className='margin_30 full_height auto_width'>{issueCards}</div>;

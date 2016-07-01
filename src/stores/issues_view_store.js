@@ -12,9 +12,16 @@ function copyOfInitData() {
           lastPage: 1,
           errorMessage: null,
           allIssuesAjaxCallXhr: null,
-          currentIssueAjaxCallXhr: null,
+          
+          currentIssueAjaxCallXhr: {abort: function(){}},
           currentIssue: null,
+          currentIssueErrorMessage: null,
           currentIssueData: null,
+
+          currentIssueComments: null,
+          currentCommentError: null,
+          currentCommentsAjaxCallXhr: null,
+
           rateLimitRemaining: 60,
           rateLimit: 60,
     }
@@ -26,9 +33,6 @@ var user = {
   accessToken: null
 }
 
-// function getCopy(obj){
-//   return JSON.parse(JSON.stringify(obj));
-// }
 
 var IssuesViewStore =  module.exports.IssuesViewStore = Object.assign({}, BaseStore, {
 
@@ -52,7 +56,27 @@ var IssuesViewStoreOperations = {
         IssuesViewerData.repoName = routerParams.repoName + '';
 
         var issueNumber = routerParams.issueNumber;
-        if(validObject(issueNumber)) IssuesViewerData.currentIssue = issueNumber;
+        IssuesViewerData.currentIssue = issueNumber;
+        if(!validObject(issueNumber))  {
+          IssuesViewerData.currentIssueData = null;
+          IssuesViewerData.currentIssueComments = null;
+          return;
+        }
+
+
+        if(!validObject(IssuesViewerData.currentIssueData) 
+          || IssuesViewerData.currentIssueData.number != issueNumber){
+              IssuesViewerData.currentIssueData = null;
+              IssuesViewerData.currentIssueComments = null;
+              for(var i=0; i<IssuesViewerData.issuesList.length; i++){
+                  if(IssuesViewerData.issuesList[i].number != issueNumber) continue;
+                  IssuesViewerData.currentIssueData = IssuesViewerData.issuesList[i];
+                  if(IssuesViewerData.currentIssueData.comments == 0){
+                    IssuesViewerData.currentIssueComments =[];
+                  }
+                  break;
+              }       
+        }
 
     },
     fetchData: function(page){
@@ -60,17 +84,29 @@ var IssuesViewStoreOperations = {
         if(typeof(page) !== 'number') page = 1;
 
         IssuesViewerData.errorMessage = null;
+        IssuesViewerData.currentPage = page;
+        if(IssuesViewerData.lastPage < page) IssuesViewerData.lastPage = page;
         this.abortFetchData();
         
         IssuesViewerData.allIssuesAjaxCallXhr = ServerAPI.fetchOrgIssues(IssuesViewerData.repoUser, IssuesViewerData.repoName, page, this.onFetchDataSuccess, this.onFetchDataError);
 
+        IssuesViewStore.emitChange(IssuesViewEvents.UPDATE_DATA);
+
     },
     abortFetchData: function(){
-
         if(IssuesViewerData.allIssuesAjaxCallXhr && IssuesViewerData.allIssuesAjaxCallXhr.readyState != 4){
           IssuesViewerData.allIssuesAjaxCallXhr.abort();
         }
-
+    },
+    abortFetchIssueData: function(){
+        if(IssuesViewerData.currentIssueAjaxCallXhr && IssuesViewerData.currentIssueAjaxCallXhr.readyState != 4){
+          IssuesViewerData.currentIssueAjaxCallXhr.abort();
+        }
+    },
+    abortFetchComments: function(){
+      if(IssuesViewerData.currentCommentsAjaxCallXhr && IssuesViewerData.currentCommentsAjaxCallXhr.readyState != 4){
+        IssuesViewerData.currentCommentsAjaxCallXhr.abort();
+      }
     },
     onFetchDataSuccess: function( result ){
 
@@ -83,7 +119,6 @@ var IssuesViewStoreOperations = {
     onFetchDataError: function(error){
 
       console.debug('error', error);
-      IssuesViewerData.allIssuesAjaxCallXhr = null;
 
       var statusText = '', gitmessage = '';
       if(error.statusText) statusText = error.statusText + ' - ';
@@ -91,6 +126,8 @@ var IssuesViewStoreOperations = {
       else if(error.responseText) gitmessage = JSON.stringify(error.responseText);
 
       IssuesViewerData.errorMessage = statusText + gitmessage;
+      IssuesViewerData.allIssuesAjaxCallXhr = null;
+
       //todo: assign data for result & remainingLimit
       IssuesViewStore.emitChange(IssuesViewEvents.UPDATE_DATA);
 
@@ -99,15 +136,25 @@ var IssuesViewStoreOperations = {
     resetData: function(){
         
         this.abortFetchData();
-        //todo: abort the fetchissuedetails ajax call too here
+        this.abortFetchIssueData();
+        this.abortFetchComments();
         var copy = copyOfInitData();
         copy.rateLimitRemaining = IssuesViewerData.rateLimitRemaining;
         IssuesViewerData = copy;
 
     },
+
+    closeIssuePage: function(){
+        this.abortFetchIssueData();
+        IssuesViewerData.currentIssue = null;
+        IssuesViewerData.currentIssueData = null;
+        IssuesViewerData.currentIssueErrorMessage = null;
+        IssuesViewerData.currentIssueAjaxCallXhr = null;
+        IssuesViewStore.emitChange(IssuesViewEvents.UPDATE_DATA);
+    },
 }
 
-if(process.env.NODE_ENV !== 'production'){
+if(process.env.NODE_ENV === 'test'){
   module.exports.IssuesViewStoreOperations = IssuesViewStoreOperations;
   module.exports.IssuesViewerData = IssuesViewerData;
 }
@@ -122,6 +169,7 @@ IssuesViewDispatcher.register(function(action) {
     case IssuesViewEvents.INIT_DATA: IssuesViewStoreOperations.initData(data.routerParams); break;
     case IssuesViewEvents.UPDATE_DATA: IssuesViewStoreOperations.fetchData(data.page); break;
     case IssuesViewEvents.RESET_DATA: IssuesViewStoreOperations.resetData();break;
+    case IssuesViewEvents.CLOSE_ISSUE_PAGE: IssuesViewStoreOperations.closeIssuePage(); break;
     default: break;
   }
 });

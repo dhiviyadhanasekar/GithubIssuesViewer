@@ -6,7 +6,7 @@ var Body = module.exports = React.createClass({
     render: function(){
 
       var error = IssuesViewStore.getProp('errorMessage');
-      if(validObject(error)) return <ResultsError error={error} />;
+      if(validObject(error)) return <ResultsError error={error} />; 
       return <ResultsDisplay />;
     }
 });
