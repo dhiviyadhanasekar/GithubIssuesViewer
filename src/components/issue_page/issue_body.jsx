@@ -10,7 +10,7 @@ var IssueBody = module.exports = React.createClass({
         if(!validObject(body) || body.length === 0) body = '<div style="font-style: oblique;">No text available</div>';
 
         return <div className='row margin_10_bottom'>
-                    <div className='margin_auto_right vertical_align_top'>
+                    <div className='margin_auto_right vertical_align_top' style={{width: 85}}>
                       <ReporterAvatar user={issue.user} dimensions={50}/>
                     </div>
                     <div className='round white_background small padding_10 z2 margin_10_right full_width full_height' style={{minHeight: 43}}>
@@ -19,11 +19,26 @@ var IssueBody = module.exports = React.createClass({
                 </div>;
     },
 
+    renderCommentsFetchError: function(){
+        var error = IssuesViewStore.getProp('currentCommentError');
+        if(validObject(error)){
+        return <div className='round  padding_10 red small full_height flex_center margin_10_top'>
+                      Error fetching issue comments: {error}...
+                    </div>
+        }
+    },
+
+    renderCommentsSection: function(issue){
+        // if(issue.comments === 0) return null; //todo: uncomment out
+        var error = IssuesViewStore.getProp('currentCommentError');
+        if(validObject(error)) return null;
+    },
+
     render: function(){
       var error = IssuesViewStore.getProp('currentIssueErrorMessage');
       if(validObject(error)){
         return <div className='padding_10 flex_center'>
-                  <div className='round white_background z2 padding_20 flex_center red small full_height full_width'>
+                  <div className='round white_background z2 padding_20 flex_center red small full_height margin_50_left'>
                     Error fetching issue details: {error}
                   </div>
                </div>
@@ -37,12 +52,15 @@ var IssueBody = module.exports = React.createClass({
       }
 
 
-      return <div className='padding_10 width_auto full_height row'>
-              <div className='column'>
-                {this.renderUserAndComment(issue)}
-                {this.renderUserAndComment(issue)}
-              </div>
+      return <div> 
+              <div className='padding_10 width_auto full_height row'>
+                <div className='column'>
+                  {this.renderUserAndComment(issue)}
+                  {this.renderCommentsSection(issue)}
+                </div>
                 <IssueSummary issue={issue}/>
+              </div>
+              {this.renderCommentsFetchError()}
              </div>;
 
     }
