@@ -67,12 +67,15 @@ var IssuePage = module.exports = React.createClass({
     },
 
     renderUserAndComment: function(issue){
+        var body = issue.body;
+        if(!validObject(body) || body.length === 0) body = '<div style="font-style: oblique;">No text available</div>';
+
         return <div className='row margin_10_bottom'>
                     <div className='margin_auto_right vertical_align_top'>
                       <ReporterAvatar user={issue.user} dimensions={50}/>
                     </div>
-                    <div className='round white_background small padding_10 z2 margin_10_right'>
-                        <div style={{wordWrap: 'break-word'}} dangerouslySetInnerHTML={{ __html: MardownProcessor.convertToHtml(issue.body) }}></div>
+                    <div className='round white_background small padding_10 z2 margin_10_right full_width full_height' style={{minHeight: 43}}>
+                        <div style={{wordWrap: 'break-word',wordBreak: 'break-all'}} dangerouslySetInnerHTML={{ __html: MardownProcessor.convertToHtml(body) }}></div>
                     </div>
                 </div>;
     },

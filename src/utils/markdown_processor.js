@@ -1,4 +1,5 @@
 var marked = require('marked');
+marked.setOptions({ gfm: true, breaks: true, tables: true});
 var IssuesViewConstants = require('src/app_constants/IssuesViewConstants');
 
 var MarkdownProcessor = module.exports = {
@@ -6,7 +7,8 @@ var MarkdownProcessor = module.exports = {
    convertToHtml: function(content) {
     content = this.createUserLinks(content);
     content = this.createCheckboxes(content);
-    return marked(content);
+    content = marked(content);
+    return content;
   },
 
   createCheckboxes: function(content){

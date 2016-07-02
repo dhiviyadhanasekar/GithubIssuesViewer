@@ -40,7 +40,7 @@ var IssueSummary = module.exports = React.createClass({
     renderAssignees: function(){
         var assignees = this.props.issue.assignees;
         // if(assignees.length ===0) 
-          assignees.push(this.props.issue.user);
+          // assignees.push(this.props.issue.user);
         if(assignees.length === 0) return <div className='verysmall'>None</div>;
 
         var assigneeContent = [];
