@@ -2,6 +2,8 @@ var ReactModal = require('react-modal');
 var LoadingIndicator = require('components/lib/loading_indicator');
 var ReporterAvatar = require('components/issues_viewer/reporter_avatar');
 var MardownProcessor = require('src/utils/markdown_processor');
+var IssueHeader = require('./issue_header');
+var IssueSummary = require('./issue_summary');
 
 
 var modalStyles = {
@@ -64,44 +66,42 @@ var IssuePage = module.exports = React.createClass({
         $('body').addClass('disable_y_scroll');
     },
 
-    getCurrentIssueDetails: function(prop){
-        var currentIssueData = IssuesViewStore.getProp('currentIssueData');
-        console.debug('currentIssueData', currentIssueData);
-        if(!validObject(currentIssueData)) return '';
-        if(!validObject(currentIssueData[prop])) return '';
-        return currentIssueData[prop];
-    },
-
-    renderHeader: function(){
-        var issueUrl = 'https://github.com/' + IssuesViewStore.getProp('repoUser')+ '/' + IssuesViewStore.getProp('repoName') +'/issues/' + IssuesViewStore.getProp('currentIssue');
-
-        return <div className='black_background white padding_10 relative row' style={{width: 'auto', height: 'auto'}}>
-                    <a href={issueUrl} className='white'>
-                        <span>#{IssuesViewStore.getProp('currentIssue')}</span>
-                        <span className='padding_10_left no_underline'>{this.getCurrentIssueDetails('title')}</span>
-                    </a> 
-                    <div className='margin_auto_left gray bold pointer' onClick={this.closeModal}>X</div>
-                </div>
+    renderUserAndComment: function(issue){
+        return <div className='row margin_10_bottom'>
+                    <div className='margin_auto_right vertical_align_top'>
+                      <ReporterAvatar user={issue.user} dimensions={50}/>
+                    </div>
+                    <div className='round white_background small padding_10 z2 margin_10_right'>
+                        <div style={{wordWrap: 'break-word'}} dangerouslySetInnerHTML={{ __html: MardownProcessor.convertToHtml(issue.body) }}></div>
+                    </div>
+                </div>;
     },
 
     renderBody: function(){
+
+        var error = IssuesViewStore.getProp('currentIssueErrorMessage');
+        if(validObject(error)){
+          return <div className='padding_10 flex_center'>
+                    <div className='round white_background z2 padding_20 flex_center red small full_height full_width'>
+                      Error fetching issue details: {error}
+                    </div>
+                 </div>
+        }
+
         var resultsLoading = validObject(IssuesViewStore.getProp('currentIssueAjaxCallXhr'));
         var issue = IssuesViewStore.getProp('currentIssueData');
-        
+
         if(resultsLoading === true || !validObject(issue)){
           return <LoadingIndicator klass='round graylightest_background full_height full_width inline_block'/>
         }
 
 
-        return <div className='padding_10 width_auto full_height'>
-                  <div className='row'>
-                    <div className='margin_auto_right'>
-                      <ReporterAvatar user={issue.user} displayUserName={false} dimensions={50}/>
-                    </div>
-                    <div className='round white_background small padding_10 z2'>
-                        <div style={{wordWrap: 'break-word'}} dangerouslySetInnerHTML={{ __html: MardownProcessor.convertToHtml(issue.body) }}></div>
-                    </div>
-                  </div>
+        return <div className='padding_10 width_auto full_height row'>
+                <div className='column'>
+                  {this.renderUserAndComment(issue)}
+                  {this.renderUserAndComment(issue)}
+                </div>
+                  <IssueSummary issue={issue}/>
                </div>;
 
     },
@@ -115,7 +115,6 @@ var IssuePage = module.exports = React.createClass({
     },
     componentWillReceiveProps: function(){
       var newValue = validObject(IssuesViewStore.getProp('currentIssue'));
-      // if(this.state.isModalOpen !== newValue) 
       this.setState({ isModalOpen: newValue });
     },
     render: function(){
@@ -123,7 +122,7 @@ var IssuePage = module.exports = React.createClass({
                             onRequestClose={this.closeModal}
                             onAfterOpen={this.handleOnAfterOpenModal}
                             style={modalStyles} className='z3 justify_center'>
-                  {this.renderHeader()}
+                  <IssueHeader closeModal={this.closeModal}/>
                   {this.renderBody()}
               </ReactModal>
     }

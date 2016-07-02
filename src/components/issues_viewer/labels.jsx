@@ -14,6 +14,9 @@ var Labels = module.exports = React.createClass({
               marginRight: 5,
               background: '#' + label.color,
             }
+            if(this.props.labelStyle){
+              style=$.extend({}, style, this.props.labelStyle);
+            }
             labelArray.push(
               <div key={this.props.issue.id + '_' + 'label' + i} style={style} className='white round '>
                 {label.name}
@@ -21,6 +24,8 @@ var Labels = module.exports = React.createClass({
             );
       }
 
-      return <div className='row verysmall' style={{paddingTop: 2}}>{labelArray}</div>;
+      var klass= this.props.klass ? this.props.klass : 'row verysmall';
+
+      return <div className={klass} style={{paddingTop: 2}}>{labelArray}</div>;
   },
 });

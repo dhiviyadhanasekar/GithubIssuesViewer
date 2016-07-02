@@ -13,6 +13,7 @@ var ServerApi = module.exports = {
           if(successCallback) successCallback(results);
 
       }, error: function(e){
+          if(e.statusText === 'abort') return;
           console.error('Error fetching github issues for repo', repo , ': ', e);
           if(errorCallBack) errorCallBack(e);
       }
@@ -32,6 +33,7 @@ var ServerApi = module.exports = {
           if(successCallback) successCallback(results);
 
       }, error: function(e){
+          if(e.statusText === 'abort') return;
           console.error('Error fetching github issue data for ', url , ': ', e);
           if(errorCallBack) errorCallBack(e);
       }
