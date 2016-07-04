@@ -171,7 +171,7 @@ a:hover { text-decoration: underline; }
   // position: relative;
   overflow: hidden;
   box-shadow: 0 16px 10px -17px rgba(0, 0, 0, 0.5);
-}
+} 
 .triangle-with-shadow:after {
   content: "";
   position: absolute;
@@ -182,6 +182,10 @@ a:hover { text-decoration: underline; }
   top: 75px;
   left: 25px;
   box-shadow: -1px -1px 10px -2px rgba(0, 0, 0, 0.5);
+}
+
+.commentBox img{
+  max-width: 100%;
 }
 
 

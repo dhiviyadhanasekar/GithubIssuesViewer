@@ -7,9 +7,10 @@ var LoadingIndicator = module.exports = React.createClass({
       klass: React.PropTypes.string,
     },
     render: function(){
+      var loadingText = this.props.loadingText ? this.props.loadingText : 'Loading issues...';
       return (
           <div className={this.props.klass} style={this.props.style}>
-              <div className='flex_center margin_30_top'>Loading issues...</div>
+              <div className='flex_center margin_30_top'>{loadingText}</div>
               <div className='flex_center' style={{height: 80}}><Spinner /></div>
           </div>
       )

@@ -55,9 +55,10 @@ var IssueSummary = module.exports = React.createClass({
     render: function(){
 
       var issue = this.props.issue;
+      var labelColor = (issue.state == 'open') ? '6cc644' : 'FFB2B2'; 
       var openClosedLabel = {
         id: issue.id + '_' + 'status',
-        labels: [{name: issue.state.toUpperCase(), color: '6cc644'}]
+        labels: [{name: issue.state.toUpperCase(), color: labelColor}]
       }
 
       return <div className='margin_auto_left round white_background small z2 padding_10 column' 

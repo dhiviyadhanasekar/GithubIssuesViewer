@@ -22,8 +22,8 @@ function copyOfInitData() {
           currentCommentError: null,
           currentCommentsAjaxCallXhr: null,
 
-          rateLimitRemaining: 60,
-          rateLimit: 60,
+          // rateLimitRemaining: 60, //not currently used, 
+          // rateLimit: 60,
     }
     return initData;
 }
@@ -49,25 +49,94 @@ var IssuesViewStore =  module.exports.IssuesViewStore = Object.assign({}, BaseSt
 });
 
 var IssuesViewStoreOperations = {
-    
+
+    fetchIssueDataAndComments: function(data){
+        // repoUser, repoName, issueNumber, successCallback, errorCallBack, fetchCommentsOnly
+
+        if(data.fetchIssueData === true){
+            IssuesViewerData.currentIssueErrorMessage = null;
+            this.abortFetchIssueData();
+            // console.debug(' IssuesViewerData.currentIssue 2',  IssuesViewerData.currentIssue);
+            IssuesViewerData.currentIssueAjaxCallXhr = ServerAPI.fetchIssueData( IssuesViewerData.repoUser,
+                                                            IssuesViewerData.repoName, 
+                                                            IssuesViewerData.currentIssue, 
+                                                            this.onFetchIssueSuccess,
+                                                            this.onFetchIssueError, false );
+        }
+
+        if(data.fetchComments === true){
+
+          IssuesViewerData.currentCommentError = null;
+          this.abortFetchComments();
+          console.debug(' IssuesViewerData.currentIssue 2',  IssuesViewerData.currentIssue);
+          IssuesViewerData.currentCommentsAjaxCallXhr = ServerAPI.fetchIssueData( IssuesViewerData.repoUser,
+                                                          IssuesViewerData.repoName, 
+                                                          IssuesViewerData.currentIssue, 
+                                                          this.onFetchCommentSuccess,
+                                                          this.onFetchCommentError, true );
+
+        }
+
+        IssuesViewStore.emitChange(IssuesViewEvents.UPDATE_DATA);
+
+    },
+
+    onFetchCommentSuccess: function(result){
+        IssuesViewerData.currentCommentsAjaxCallXhr = null;
+        IssuesViewerData.currentIssueComments = result;
+        IssuesViewStore.emitChange(IssuesViewEvents.UPDATE_DATA);
+    },
+
+    onFetchCommentError: function(error){
+        IssuesViewerData.currentCommentError = IssuesViewStoreOperations.extractErrorMessage(error);
+        IssuesViewerData.currentCommentsAjaxCallXhr = null;
+        IssuesViewStore.emitChange(IssuesViewEvents.UPDATE_DATA);
+    },
+
+    onFetchIssueSuccess: function( result ){
+        // console.debug('result', result);
+        IssuesViewerData.currentIssueAjaxCallXhr = null;
+        IssuesViewerData.currentIssueData = result;
+        IssuesViewStore.emitChange(IssuesViewEvents.UPDATE_DATA);
+    },
+
+    extractErrorMessage: function(error){
+        var statusText = '', gitmessage = '';
+        if(error.statusText) statusText = error.statusText + ' - ';
+        if(error.responseJSON && error.responseJSON.message) gitmessage = error.responseJSON.message;
+        else if(error.responseText) gitmessage = JSON.stringify(error.responseText);
+
+        return statusText + gitmessage;
+    },
+
+    onFetchIssueError: function(error){
+        IssuesViewerData.currentIssueErrorMessage = IssuesViewStoreOperations.extractErrorMessage(error);//statusText + gitmessage;
+        IssuesViewerData.currentIssueAjaxCallXhr = null;
+        IssuesViewStore.emitChange(IssuesViewEvents.UPDATE_DATA);
+    },
+
     initData: function(routerParams){
 
         IssuesViewerData.repoUser = routerParams.repoUser + '';
         IssuesViewerData.repoName = routerParams.repoName + '';
 
         var issueNumber = routerParams.issueNumber;
+        
         IssuesViewerData.currentIssue = issueNumber;
         if(!validObject(issueNumber))  {
+          console.debug('not a validObject....');
           IssuesViewerData.currentIssueData = null;
           IssuesViewerData.currentIssueComments = null;
           return;
         }
 
+        console.debug(' IssuesViewerData.currentIssue',  IssuesViewerData.currentIssue);
 
         if(!validObject(IssuesViewerData.currentIssueData) 
           || IssuesViewerData.currentIssueData.number != issueNumber){
               IssuesViewerData.currentIssueData = null;
               IssuesViewerData.currentIssueComments = null;
+              if(validObject(IssuesViewerData.issuesList)){
               for(var i=0; i<IssuesViewerData.issuesList.length; i++){
                   if(IssuesViewerData.issuesList[i].number != issueNumber) continue;
                   IssuesViewerData.currentIssueData = IssuesViewerData.issuesList[i];
@@ -75,13 +144,15 @@ var IssuesViewStoreOperations = {
                     IssuesViewerData.currentIssueComments =[];
                   }
                   break;
-              }       
+              }
+            }       
         }
 
     },
     fetchData: function(page){
 
-        if(typeof(page) !== 'number') page = 1;
+        if(!validObject(page)) page = IssuesViewerData.currentPage;
+        else if(typeof(page) !== 'number') page = 1;
 
         IssuesViewerData.errorMessage = null;
         IssuesViewerData.currentPage = page;
@@ -116,21 +187,13 @@ var IssuesViewStoreOperations = {
         IssuesViewStore.emitChange(IssuesViewEvents.UPDATE_DATA);
 
     },
+
     onFetchDataError: function(error){
 
-      console.debug('error', error);
-
-      var statusText = '', gitmessage = '';
-      if(error.statusText) statusText = error.statusText + ' - ';
-      if(error.responseJSON && error.responseJSON.message) gitmessage = error.responseJSON.message;
-      else if(error.responseText) gitmessage = JSON.stringify(error.responseText);
-
-      IssuesViewerData.errorMessage = statusText + gitmessage;
+      IssuesViewerData.errorMessage = IssuesViewStoreOperations.extractErrorMessage(error);//statusText + gitmessage;
       IssuesViewerData.allIssuesAjaxCallXhr = null;
 
-      //todo: assign data for result & remainingLimit
       IssuesViewStore.emitChange(IssuesViewEvents.UPDATE_DATA);
-
     },
 
     resetData: function(){
@@ -139,7 +202,7 @@ var IssuesViewStoreOperations = {
         this.abortFetchIssueData();
         this.abortFetchComments();
         var copy = copyOfInitData();
-        copy.rateLimitRemaining = IssuesViewerData.rateLimitRemaining;
+        // copy.rateLimitRemaining = IssuesViewerData.rateLimitRemaining;
         IssuesViewerData = copy;
 
     },
@@ -153,6 +216,7 @@ var IssuesViewStoreOperations = {
         IssuesViewerData.currentIssueAjaxCallXhr = null;
         IssuesViewStore.emitChange(IssuesViewEvents.UPDATE_DATA);
     },
+
 }
 
 if(process.env.NODE_ENV === 'test'){
@@ -171,6 +235,7 @@ IssuesViewDispatcher.register(function(action) {
     case IssuesViewEvents.UPDATE_DATA: IssuesViewStoreOperations.fetchData(data.page); break;
     case IssuesViewEvents.RESET_DATA: IssuesViewStoreOperations.resetData();break;
     case IssuesViewEvents.CLOSE_ISSUE_PAGE: IssuesViewStoreOperations.closeIssuePage(); break;
+    case IssuesViewEvents.FETCH_ISSUE_DETAILS: IssuesViewStoreOperations.fetchIssueDataAndComments(data); break;
     default: break;
   }
 });

@@ -20,7 +20,12 @@ var ServerApi = module.exports = {
     });
   },
   fetchIssueData: function(repoUser, repoName, issueNumber, successCallback, errorCallBack, fetchCommentsOnly){
+
+    // return ; //todo: remove
     var repo = repoUser + '/' + repoName;
+
+    if(!validObject(issueNumber)) return;
+
     var url = githubApiUrl + '/repos/' + repo + '/issues/' + issueNumber;
     if(fetchCommentsOnly === true){
       url += '/comments';

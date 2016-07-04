@@ -11,6 +11,7 @@ var IssuesViewer = module.exports = React.createClass({
     },
 
     needUpdateUrl: false,
+    componentMounted: false,
     getInitialState: function(){
         this.needUpdateUrl = this.doesUrlNeedUpdate(this.props);
         return IssuesViewStore.getAllData();
@@ -62,6 +63,7 @@ var IssuesViewer = module.exports = React.createClass({
 
     updateState: function(){
         // console.debug('setting state.....', IssuesViewStore.getAllData());
+        if(this.componentMounted === true)
         this.setState(IssuesViewStore.getAllData());
         // console.debug('this.state', this.state);
     },
@@ -86,11 +88,13 @@ var IssuesViewer = module.exports = React.createClass({
         // console.debug('this.props', this.props);
         IssuesViewStore.addChangeListener(IssuesViewEvents.UPDATE_DATA, this.updateState);
         // IssuesViewAction.fetchIssues(this.state.currentPage);
+        this.componentMounted = true;
     },
 
     componentWillUnmount: function() {
         IssuesViewStore.removeChangeListener(IssuesViewEvents.UPDATE_DATA, this.updateState);
-        IssuesViewAction.resetData(); 
+        IssuesViewAction.resetData();
+        this.componentMounted = false;
     },
    
     render: function(){

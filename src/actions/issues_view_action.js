@@ -28,9 +28,11 @@ var IssuesViewAction = module.exports = {
       });
     },
 
-    fetchIssueData: function(fetchIssueDta, fetchComments){
+    fetchIssueData: function(fetchIssueData, fetchComments){
       IssuesViewDispatcher.dispatch({
-          actionType: IssuesViewEvents.CLOSE_ISSUE_PAGE
+          actionType: IssuesViewEvents.FETCH_ISSUE_DETAILS,
+          data: { fetchIssueData: fetchIssueData, 
+                   fetchComments: fetchComments }
       });
 
     },

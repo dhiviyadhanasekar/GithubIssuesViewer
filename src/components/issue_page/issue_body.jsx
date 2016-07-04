@@ -13,25 +13,50 @@ var IssueBody = module.exports = React.createClass({
                     <div className='margin_auto_right vertical_align_top' style={{width: 85}}>
                       <ReporterAvatar user={issue.user} dimensions={50}/>
                     </div>
-                    <div className='round white_background small padding_10 z2 margin_10_right full_width full_height' style={{minHeight: 43}}>
+                    <div className='round white_background small padding_10 z2 margin_10_right full_width full_height commentBox' style={{minHeight: 43}}>
                         <div style={{wordWrap: 'break-word',wordBreak: 'break-all'}} dangerouslySetInnerHTML={{ __html: MardownProcessor.convertToHtml(body) }}></div>
                     </div>
                 </div>;
     },
 
-    renderCommentsFetchError: function(){
+    renderCommentsFetchError: function(issue){
+
+        if(issue.comments === 0) return null; 
         var error = IssuesViewStore.getProp('currentCommentError');
         if(validObject(error)){
         return <div className='round  padding_10 red small full_height flex_center margin_10_top'>
                       Error fetching issue comments: {error}...
-                    </div>
+               </div>
         }
+
+        var ajaxCall = IssuesViewStore.getProp('currentCommentsAjaxCallXhr');
+        if(validObject(ajaxCall) === true || !validObject(IssuesViewStore.getProp('currentIssueComments')) ) {
+          
+          var loadingText = 'Loading comment';
+          if(issue.comments > 1) loadingText += 's';
+          loadingText += '...';
+          
+          return <LoadingIndicator klass='round graylightest_background full_height full_width inline_block' loadingText={loadingText} />
+        }
+
+        return null;
     },
 
     renderCommentsSection: function(issue){
-        // if(issue.comments === 0) return null; //todo: uncomment out
+
+        if(issue.comments === 0) return null; //todo: uncomment out
         var error = IssuesViewStore.getProp('currentCommentError');
         if(validObject(error)) return null;
+
+        var comments = IssuesViewStore.getProp('currentIssueComments');
+        if(!validObject(comments) || comments.length === 0) return null; //incase there is a sync issue between the data we fetched for issue details and comments
+
+        var commentContent = [];
+        for(var i=0; i<comments.length; i++){
+          commentContent.push( this.renderUserAndComment( comments[i] ) );
+        }
+
+        return commentContent;
     },
 
     render: function(){
@@ -60,7 +85,7 @@ var IssueBody = module.exports = React.createClass({
                 </div>
                 <IssueSummary issue={issue}/>
               </div>
-              {this.renderCommentsFetchError()}
+              {this.renderCommentsFetchError(issue)}
              </div>;
 
     }

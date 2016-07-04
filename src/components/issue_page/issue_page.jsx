@@ -23,9 +23,9 @@ var modalStyles = {
     background                 : '#F5F6F7',
     overflow                   : 'auto',
     WebkitOverflowScrolling    : 'touch',
-    borderRadius               : '4px',
+    borderRadius               : 4,
     outline                    : 'none',
-    padding                    : '0',
+    padding                    : 0,
     minHeight                  : 500,
     height                     : 'auto',
   }
@@ -40,8 +40,10 @@ var IssuePage = module.exports = React.createClass({
     },
 
     getInitialState: function(){
+      var currentIssue = IssuesViewStore.getProp('currentIssue');
       return {
-        isModalOpen: validObject(IssuesViewStore.getProp('currentIssue'))
+        isModalOpen: validObject(currentIssue),
+        currentIssueId: currentIssue,
       }
     },
 
@@ -61,18 +63,31 @@ var IssuePage = module.exports = React.createClass({
 
     handleOnAfterOpenModal: function(){
         $('body').addClass('disable_y_scroll');
+        this.fetchCommentsData();
     },
 
-    componentDidMount: function(){
-        var fetchData = !validObject(IssuesViewStore.getProp('currentIssueData'));
-        var fetchComments = !!validObject(IssuesViewStore.getProp('currentIssueComments'));
+    fetchCommentsData: function(){
+        var issue = IssuesViewStore.getProp('currentIssueData');
+        var fetchData = !validObject(issue);
+
+        var fetchComments = !validObject(IssuesViewStore.getProp('currentIssueComments'));
+        if(fetchData === false && issue.comments === 0) fetchComments = false;
+
         if(fetchData === true || fetchComments === true){
           IssuesViewAction.fetchIssueData(fetchData, fetchComments);
         }
     },
+
     componentWillReceiveProps: function(){
-      var newValue = validObject(IssuesViewStore.getProp('currentIssue'));
-      this.setState({ isModalOpen: newValue });
+      var currentIssue = IssuesViewStore.getProp('currentIssue');
+      if(currentIssue !== this.state.currentIssueId) this.fetchCommentsData();
+
+      var newValue = validObject(currentIssue);
+      // if(this.state.isModalOpen !== newValue) 
+        this.setState({ 
+          isModalOpen: newValue,
+          currentIssueId: currentIssue 
+        });
     },
     render: function(){
         return <ReactModal isOpen={this.state.isModalOpen} 
