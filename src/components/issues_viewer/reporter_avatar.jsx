@@ -13,7 +13,7 @@ var ReporterAvatar = module.exports = React.createClass({
 
       var userNameStyle ={
           width: '100%',
-          maxWidth: 80
+          maxWidth: 75
       }
 
       var userName = null;
