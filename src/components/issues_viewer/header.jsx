@@ -40,9 +40,9 @@ var Header = module.exports = React.createClass({
                   style={style}>
                 <img src={GithubLogo} alt="Github Logo" style={{width:40,height:40}} className=''/>
                 <div className='bold inline_flex margin_auto_right margin_30_left'>
-                    <ContentEditableDiv class='placeholder' placeholder='Type Repo username here' text={IssuesViewStore.getProp('repoUser')} onEnterKey={this.updateUser}/>
+                    <ContentEditableDiv class='placeholder' placeholder='Type Repo username here' text={IssuesViewStore.getProp('repoUser')} onEnterKey={this.updateUser} onBlur={this.updateUser}/>
                     <div className='margin_10_left margin_10_right'>/</div>
-                    <ContentEditableDiv class='placeholder' placeholder='Type Repo name here' text={IssuesViewStore.getProp('repoName')} onEnterKey={this.updateRepo}/>
+                    <ContentEditableDiv class='placeholder' placeholder='Type Repo name here' text={IssuesViewStore.getProp('repoName')} onEnterKey={this.updateRepo} onBlur={this.updateRepo}/>
                 </div>
             </div>
     }

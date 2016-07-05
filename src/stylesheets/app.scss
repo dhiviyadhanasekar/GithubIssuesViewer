@@ -165,6 +165,10 @@ a:hover { text-decoration: underline; }
   text-overflow: ellipsis;
 }
 
+.not_clickable{
+  pointer-events: none;
+}
+
 /*********************************
   CUSTOM
 **********************************/

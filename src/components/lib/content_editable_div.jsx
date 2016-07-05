@@ -36,7 +36,7 @@ var ContentEditableDiv = module.exports = React.createClass({
         var el = $(e.target);
         var text = $.trim(el.text());
         el.text(text); //just to keep it in sync
-        this.props.onBlur(text, e);
+        this.props.onBlur(e);
       }
   },
   
