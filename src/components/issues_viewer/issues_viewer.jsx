@@ -13,11 +13,11 @@ var IssuesViewer = module.exports = React.createClass({
     needUpdateUrl: false,
     componentMounted: false,
     getInitialState: function(){
-        this.needUpdateUrl = this.doesUrlNeedUpdate(this.props);
+        this.needUpdateUrl = this.doesUrlNeedUpdate(this.props, true);
         return IssuesViewStore.getAllData();
     },
 
-    doesUrlNeedUpdate: function(props){
+    doesUrlNeedUpdate: function(props, firstInit){
 
         // console.debug('doesUrlNeedUpdate props', props);
        
@@ -37,6 +37,11 @@ var IssuesViewer = module.exports = React.createClass({
                 return false;
 
                 IssuesViewAction.initData(props.params);
+                return true;
+        }
+
+        if(firstInit === true){
+            IssuesViewAction.initData({repoUser: 'npm', repoName: 'npm'});
         }
         return true;
 
@@ -62,17 +67,19 @@ var IssuesViewer = module.exports = React.createClass({
     },
 
     updateState: function(){
-        // console.debug('setting state.....', IssuesViewStore.getAllData());
-        if(this.componentMounted === true)
-        this.setState(IssuesViewStore.getAllData());
+        console.debug('setting state.....', IssuesViewStore.getAllData());
+        if(this.componentMounted === true) this.setState(IssuesViewStore.getAllData());
         // console.debug('this.state', this.state);
     },
    
-    componentWillReceiveProps: function(nextProps, prevProps){
+    componentWillReceiveProps: function(nextProps){
         console.debug('nextprops', nextProps);
-        console.debug('prevProps', prevProps);
+        // console.debug('prevProps', prevProps);
         var updateUrl = this.updateDefaultUrl(nextProps);
-        if(updateUrl === true) this.updateState();
+        if(updateUrl === true) {
+             this.needUpdateUrl = false;
+             this.updateState();
+        }
     },
    
     componentWillMount: function(){
@@ -83,12 +90,12 @@ var IssuesViewer = module.exports = React.createClass({
     },
    
     componentDidMount: function(){
-        // console.log(ReactDOM.findDOMNode(this.refs.test));
-        console.debug('this.state', this.state);
-        // console.debug('this.props', this.props);
+        // console.debug('this.state', this.state);
         IssuesViewStore.addChangeListener(IssuesViewEvents.UPDATE_DATA, this.updateState);
-        // IssuesViewAction.fetchIssues(this.state.currentPage);
         this.componentMounted = true;
+        console.debug('this.needUpdateUrl', this.needUpdateUrl);
+        // if(this.needUpdateUrl === false){ IssuesViewAction.fetchIssues(1) }
+        // else {  this.updateState(); };
     },
 
     componentWillUnmount: function() {
@@ -98,6 +105,7 @@ var IssuesViewer = module.exports = React.createClass({
     },
    
     render: function(){
+        console.debug('this.state', this.state)
         return <div className='u-max-full-width relative'>
                     <Header />
                     <Body /> 

@@ -2,12 +2,33 @@ var ContentEditableDiv = require('components/lib/content_editable_div');
 var GithubLogo = require('src/images/Github-Mark.png');
 
 var Header = module.exports = React.createClass({
+    
     displayName: 'Header',
-    renderLogin: function(){
-        <div className='margin_auto_left'>
-           
-        </div>
+    
+    contextTypes: {
+        router: React.PropTypes.object.isRequired
     },
+
+    updateUser: function(e){
+        var userName = e.target.innerHTML.trim();
+        console.debug('username', userName);
+        if(validObject(userName) && userName.length > 0 && userName !== IssuesViewStore.getProp('repoUser')){
+          this.context.router.push({
+              pathname: '/gitissues/' + userName + '/' +IssuesViewStore.getProp('repoName')+'/issues',
+          });
+        }
+    },
+
+    updateRepo: function(e){
+        var userRepoName = e.target.innerHTML.trim();
+        console.debug('username', userRepoName);
+        if(validObject(userRepoName) && userRepoName.length > 0 && userRepoName !== IssuesViewStore.getProp('repoName')){
+          this.context.router.push({
+              pathname: '/gitissues/' + IssuesViewStore.getProp('repoUser') + '/' + userRepoName +'/issues',
+          });
+        }
+    },
+    
     render: function(){
       var style = {
         height: 56,
@@ -19,11 +40,10 @@ var Header = module.exports = React.createClass({
                   style={style}>
                 <img src={GithubLogo} alt="Github Logo" style={{width:40,height:40}} className=''/>
                 <div className='bold inline_flex margin_auto_right margin_30_left'>
-                    <ContentEditableDiv class='placeholder' placeholder='Type Repo username here' text={IssuesViewStore.getProp('repoUser')}/>
+                    <ContentEditableDiv class='placeholder' placeholder='Type Repo username here' text={IssuesViewStore.getProp('repoUser')} onEnterKey={this.updateUser}/>
                     <div className='margin_10_left margin_10_right'>/</div>
-                    <ContentEditableDiv class='placeholder' placeholder='Type Repo name here' text={IssuesViewStore.getProp('repoName')}/>
+                    <ContentEditableDiv class='placeholder' placeholder='Type Repo name here' text={IssuesViewStore.getProp('repoName')} onEnterKey={this.updateRepo}/>
                 </div>
-                 {this.renderLogin()}
             </div>
     }
 });

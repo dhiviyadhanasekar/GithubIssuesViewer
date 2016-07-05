@@ -5,10 +5,15 @@ var githubApiUrl = 'https://api.github.com';
 
 var ServerApi = module.exports = {
   fetchOrgIssues: function(repoUser, repoName, page, successCallback, errorCallBack){
+
     var repo = repoUser + '/' + repoName;
+
+    console.debug('in fetching issues....', repo);
+    // return ; //todo: remove
+
     return $.ajax({
       url: githubApiUrl + '/repos/' + repo + '/issues?per_page='+ IssuesViewConstants.ISSUES_PER_PAGE +'&page='+ page,
-      success: function(results){
+      success: function(results){ //(,status, xhr){
           console.debug('result', results);
           if(successCallback) successCallback(results);
 
@@ -44,12 +49,24 @@ var ServerApi = module.exports = {
       }
     });
   },
-
-   
-  // initAuthentication: function(){
-  //     $.ajax({
-  //         url: 'https://github.com/login/oauth/authorize',
-          
-  //     });
-  // },
 }
+
+// Object {next: Object, last: Object}
+// last
+// :
+// Object
+// page
+// :
+// "98"
+// per_page
+// :
+// "25"
+// rel
+// :
+// "last"
+// url
+// :
+// "https://api.github.com/repositories/321278/issues?per_page=25&page=98"
+// __proto__
+// :
+// Object

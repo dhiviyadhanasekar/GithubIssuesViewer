@@ -34,6 +34,5 @@ var IssuesViewAction = module.exports = {
           data: { fetchIssueData: fetchIssueData, 
                    fetchComments: fetchComments }
       });
-
-    },
+    }
 }

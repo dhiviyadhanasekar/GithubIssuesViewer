@@ -2,16 +2,20 @@ const IssuesViewEvents = require('src/app_constants/IssuesViewEvents');
 var IssuesViewDispatcher = require('src/dispatchers/issues_view_dispatcher');
 var ServerAPI = require('./server_api');
 var BaseStore = require('./base_store');
+var parseLink = require('parse-link-header');
 
 function copyOfInitData() {
     var initData = {
-          repoUser: 'npm',
-          repoName: 'npm',
-          issuesList: require('test/mock_issues_data'),//[],
-          currentPage: 1,
-          lastPage: 1,
+          repoUser: '',
+          repoName: '',
+          
+          issuesList: [],
+          // issuesList: require('test/mock_issues_data'),
           errorMessage: null,
           allIssuesAjaxCallXhr: null,
+
+          currentPage: 1,
+          lastPage: 1,
           
           currentIssueAjaxCallXhr: null,
           currentIssue: null,
@@ -22,7 +26,7 @@ function copyOfInitData() {
           currentCommentError: null,
           currentCommentsAjaxCallXhr: null,
 
-          // rateLimitRemaining: 60, //not currently used, 
+          // rateLimitRemaining: 60, //not currently used, was intended for oauth
           // rateLimit: 60,
     }
     return initData;
@@ -40,7 +44,7 @@ var IssuesViewStore =  module.exports.IssuesViewStore = Object.assign({}, BaseSt
       return IssuesViewerData[prop] ;
     },
     getAllData: function(){
-        return IssuesViewerData;
+        return  _.cloneDeep(IssuesViewerData);
     },
     getUrlPathName: function(){
         return '/gitissues/' + IssuesViewerData['repoUser']+ '/' +IssuesViewerData['repoName']+'/issues';
@@ -117,8 +121,20 @@ var IssuesViewStoreOperations = {
 
     initData: function(routerParams){
 
+        var fetchIssuesFromGit = false;
+        if(IssuesViewerData.repoUser !== routerParams.repoUser || IssuesViewerData.repoName !== routerParams.repoName){
+            console.debug('changing stuff....');
+            IssuesViewerData.currentPage = 1;
+            IssuesViewerData.lastPage = 1;
+            IssuesViewerData.errorMessage = null;
+            fetchIssuesFromGit = true;
+        }
         IssuesViewerData.repoUser = routerParams.repoUser + '';
         IssuesViewerData.repoName = routerParams.repoName + '';
+        if(fetchIssuesFromGit === true) {
+          console.debug('IssuesViewerData.repoUser, IssuesViewerData.repoName', IssuesViewerData.repoUser, IssuesViewerData.repoName);
+          this.fetchData(1);
+        }
 
         var issueNumber = routerParams.issueNumber;
         
@@ -127,6 +143,8 @@ var IssuesViewStoreOperations = {
           console.debug('not a validObject....');
           IssuesViewerData.currentIssueData = null;
           IssuesViewerData.currentIssueComments = null;
+          IssuesViewerData.currentIssueErrorMessage = null;
+          IssuesViewerData.currentCommentError = null;
           return;
         }
 
@@ -134,8 +152,12 @@ var IssuesViewStoreOperations = {
 
         if(!validObject(IssuesViewerData.currentIssueData) 
           || IssuesViewerData.currentIssueData.number != issueNumber){
+
               IssuesViewerData.currentIssueData = null;
               IssuesViewerData.currentIssueComments = null;
+              IssuesViewerData.currentIssueErrorMessage = null;
+              IssuesViewerData.currentCommentError = null;
+
               if(validObject(IssuesViewerData.issuesList)){
               for(var i=0; i<IssuesViewerData.issuesList.length; i++){
                   if(IssuesViewerData.issuesList[i].number != issueNumber) continue;
@@ -152,11 +174,13 @@ var IssuesViewStoreOperations = {
     fetchData: function(page){
 
         if(!validObject(page)) page = IssuesViewerData.currentPage;
-        else if(typeof(page) !== 'number') page = 1;
+        if(typeof(page) !== 'number') page = 1;
+
+        if(IssuesViewerData.lastPage < page) return;
+        //IssuesViewerData.lastPage = page;
 
         IssuesViewerData.errorMessage = null;
         IssuesViewerData.currentPage = page;
-        if(IssuesViewerData.lastPage < page) IssuesViewerData.lastPage = page;
         this.abortFetchData();
         
         IssuesViewerData.allIssuesAjaxCallXhr = ServerAPI.fetchOrgIssues(IssuesViewerData.repoUser, IssuesViewerData.repoName, page, this.onFetchDataSuccess, this.onFetchDataError);
@@ -181,9 +205,20 @@ var IssuesViewStoreOperations = {
     },
     onFetchDataSuccess: function( result ){
 
-        console.debug('result', result);
+        // console.debug('result', result);
+        // console.debug('xhr...', IssuesViewerData.allIssuesAjaxCallXhr.getResponseHeader("Link"));
+        var linkHeader = IssuesViewerData.allIssuesAjaxCallXhr.getResponseHeader("Link");
+        var parsedLinks = parseLink(linkHeader);
+        console.debug('parsedLinks', parsedLinks);
+        if( validObject(parsedLinks) && validObject(parsedLinks['last']) && parsedLinks['last']['page']) {
+            var lastPage = parsedLinks['last']['page'];
+            if(isNaN(lastPage) === false){
+              lastPage = parseInt(lastPage);
+              IssuesViewerData.lastPage = lastPage;
+            }
+        }
+        IssuesViewerData.issuesList = result;
         IssuesViewerData.allIssuesAjaxCallXhr = null;
-        //todo: assign data for result & remainingLimit
         IssuesViewStore.emitChange(IssuesViewEvents.UPDATE_DATA);
 
     },
@@ -192,7 +227,6 @@ var IssuesViewStoreOperations = {
 
       IssuesViewerData.errorMessage = IssuesViewStoreOperations.extractErrorMessage(error);//statusText + gitmessage;
       IssuesViewerData.allIssuesAjaxCallXhr = null;
-
       IssuesViewStore.emitChange(IssuesViewEvents.UPDATE_DATA);
     },
 

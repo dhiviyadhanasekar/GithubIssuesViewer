@@ -44,7 +44,7 @@ var IssueBody = module.exports = React.createClass({
 
     renderCommentsSection: function(issue){
 
-        if(issue.comments === 0) return null; //todo: uncomment out
+        if(issue.comments === 0) return null; 
         var error = IssuesViewStore.getProp('currentCommentError');
         if(validObject(error)) return null;
 

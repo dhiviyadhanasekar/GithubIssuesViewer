@@ -155,6 +155,10 @@ a:hover { text-decoration: underline; }
   text-decoration: none !important;
 }
 
+.underline{
+  text-decoration: underline !important;
+}
+
 .ellipsis {
   white-space: nowrap;
   overflow: hidden;
@@ -187,6 +191,5 @@ a:hover { text-decoration: underline; }
 .commentBox img{
   max-width: 100%;
 }
-
 
 

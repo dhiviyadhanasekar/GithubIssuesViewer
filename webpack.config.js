@@ -50,6 +50,7 @@ module.exports = {
     ]
 }
 
+//for setting up oauth:
 // Client ID
 // 543a41e8cdf0ae24cfb4
 // Client Secret
