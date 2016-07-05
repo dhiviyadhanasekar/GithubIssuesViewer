@@ -18,7 +18,7 @@ Running production build on local machine
 
 Running tests
 1. To run unit tests, run this on the terminal: 'mocha test/unit_tests/'
-2. 
+2. To run UI headless integration tests, run 
 
 
 Features
