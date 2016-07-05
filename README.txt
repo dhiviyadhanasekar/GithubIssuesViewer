@@ -16,7 +16,9 @@ Running production build on local machine
 2. Launch the local file from assets/index.html to do a sanity check before prod deploy
 
 
-Running test
+Running tests
+1. To run unit tests, run this on the terminal: 'mocha test/unit_tests/'
+2. 
 
 
 Features

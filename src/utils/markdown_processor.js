@@ -1,6 +1,7 @@
 var marked = require('marked');
 marked.setOptions({ gfm: true, breaks: true, tables: true});
 var IssuesViewConstants = require('src/app_constants/IssuesViewConstants');
+var validObject = require('src/utils/utils').validObject;
 
 var MarkdownProcessor = module.exports = {
   
@@ -13,7 +14,7 @@ var MarkdownProcessor = module.exports = {
 
   createCheckboxes: function(content){
 
-      var checkbox = '$1<input type="checkbox" class="not_clickable"></input>$3';
+      var checkbox = '$1<input type="checkbox" class="not_clickable">$3';
       content = content.replace(/(^|\s|)(- \[ \])(\s)/g, checkbox);
 
       var checkedCheckbox = '$1<input type="checkbox" checked="true" class="not_clickable">$3';
