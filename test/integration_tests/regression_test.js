@@ -1,19 +1,22 @@
-var supertest = require('supertest');
-var chai = require('chai');
-var expect = chai.expect;
-var assert = require("assert");
-var jsdom = require('jsdom-global')();
-$ = jQuery = require('jquery');
-_ = require('lodash');
+// 'use strict';
+// require('chai').should();
 
-var mock = require('mock-require');
-mock('src/app_constants/IssuesViewEvents', '../../src/app_constants/IssuesViewEvents'); 
-mock('src/dispatchers/issues_view_dispatcher', '../../src/dispatchers/issues_view_dispatcher');
-mock('src/app_constants/IssuesViewConstants', '../../src/app_constants/IssuesViewConstants'); 
+// var webdriver = require('selenium-webdriver');
+// var By = webdriver.By;
+// var until = webdriver.until;
 
-var IssuesViewStore = require('./../../src/stores/issues_view_store').IssuesViewStore;
-var createAgent = function() {
-  return supertest.agent('http://127.0.0.1:8090');
-};
+// var driver = new webdriver.Builder()
+//   .forBrowser('firefox')
+//   .build();
 
-var agent = createAgent();
+// describe('my blog', function() {
+//   it('should navigate to post', function(done) {
+//     driver.get('http://www.google.com/ncr');
+//     this.timeout(15000);
+//     driver.findElement(By.name('q')).sendKeys('webdriver');
+//     driver.findElement(By.name('btnG')).click();
+//     driver.wait(until.titleIs('webdriver - Google Search'), 1000);
+//     driver.quit();
+//     done();
+//   });
+// });
