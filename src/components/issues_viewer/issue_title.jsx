@@ -38,7 +38,7 @@ var IssueTitle = module.exports = React.createClass({
     render: function(){
         return (
             <div onMouseEnter={this.showIssuePreview} onMouseLeave={this.hideIssuePreview} >
-                <Link to={IssuesViewStore.getUrlPathName()+'/'+this.props.issue.number} className='bold pointer'>
+                <Link to={IssuesViewStore.getUrlPathName()+'/'+this.props.issue.number} className='bold pointer testId_issue_number'>
                     #{this.props.issue.number}
                 </Link>
                 {this.renderPreview()}

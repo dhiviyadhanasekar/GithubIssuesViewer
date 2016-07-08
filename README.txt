@@ -1,22 +1,27 @@
-A complete README summarizing your project and explaining how to run your app and your tests. Consider including any additional information you feel would be helpful to the reviewers (e.g. your overall approach, project scoping, etc.)
+Tech Stack
+Node version v4.4.5
+UI - React, Flux
+URL - React Router
+Unit Testing - mocha
+Styling - SASS (scss), custom CSS, skeleton
+Build - Webpack
 
 
-Setup instructions
-1. Install npm  
-2. In terminal, navigate to root folder "GithubIssuesViewer/" and run "npm install" & "npm install --dev" (use sudo or sudo bash if necessary)
+Testing production ready code
+1. Install npm and in terminal, navigate to root folder "GithubIssuesViewer/" and run "npm install"  
+2. [DONE] To update static assets for production, on terminal run "npm run prod-build"
+3. Launch the local file from assets/index.html to do a sanity check before prod deploy
 
 
 Running App in Development Mode
-1. In terminal, navigate to root folder "GithubIssuesViewer/" and run "npm run start"
-2. Run http://localhost:8090 in browser
+1. Install npm  
+2. In terminal, navigate to root folder "GithubIssuesViewer/" and run "npm install" & "npm install --dev" (use sudo or sudo bash if necessary)
+3. In terminal, navigate to root folder "GithubIssuesViewer/" and run "npm run start"
+4. Run http://localhost:8090 in browser
 
 
-Running production build on local machine
-1. To build static assets for production, on terminal run "npm run prod-build"
-2. Launch the local file from assets/index.html to do a sanity check before prod deploy
 
-
-Running tests
+Running unit tests
 1. To run unit tests, run this on the terminal: 'mocha test/unit_tests/'
 
 
@@ -38,14 +43,21 @@ Features
 4. Issue Page URL:
     a. Issue page can reached by either clicking on the issue number on the default page or by directly using a url like: 'http://localhost:8090/#/gitissues/npm/npm/issues/13267', where 'npm/npm' is the user/repo and '13267' is the issue number
 
-5. The rest of the features remain the same as what was specified on the task.
+5. The rest of the features are the same as what was specified on the task.
 
 
-Project Scope:
+Project Scope Notes:
 1. As confirmed over email, this project doesn't have Github oauth implementation and hence allows you to make up to 60 Github requests per hour.
 
 
-Additional Information
+
+Additional Information for code review
+1. src folder - contains un-minified code
+2. assets/index.html - launch in browser to test the production ready code
+3. To overcome the ’60 Github requests per hour’ limit during development, data was mocked.
+4. src/stylesheets - css styling
+
+
 
 
 
