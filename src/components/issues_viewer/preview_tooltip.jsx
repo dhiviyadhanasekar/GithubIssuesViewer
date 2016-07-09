@@ -30,7 +30,7 @@ var PreviewTooltip = module.exports = React.createClass({
           }        
 
         return (
-          <div className='absolute' style={tooltipDivStyle}>
+          <div className='absolute testId_preview' style={tooltipDivStyle}>
             <div className='absolute white ' style={triangleStyle}>◀</div>
             <div className={tooltipClassName} style={tooltipStyle}>
               {this.props.content}

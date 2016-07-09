@@ -10,7 +10,7 @@ function copyOfInitData() {
           repoName: '',
           
           issuesList: [],
-          // issuesList: require('test/mock_issues_data'),
+          // issuesList: require('test/mock_data/mock_issues_data'),
           errorMessage: null,
           allIssuesAjaxCallXhr: null,
 

@@ -36,4 +36,11 @@ describe('Markdown Processor Unit Test', function() {
       expect(checkBoxText).to.equal(expectedText);
  });
 
+ it('should convert -[X] to unchecked checkbox - x needs to be case insensitive', function() {
+      var text = '- [X] ';
+      var checkBoxText = MarkdownProcessor.createCheckboxes(text);
+      var expectedText = '<input type="checkbox" checked="true" class="not_clickable"> ';
+      expect(checkBoxText).to.equal(expectedText);
+ });
+
  });

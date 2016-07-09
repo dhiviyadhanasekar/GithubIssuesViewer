@@ -93,7 +93,7 @@ var IssuePage = module.exports = React.createClass({
         return <ReactModal isOpen={this.state.isModalOpen} 
                             onRequestClose={this.closeModal}
                             onAfterOpen={this.handleOnAfterOpenModal}
-                            style={modalStyles} className='z3 justify_center'>
+                            style={modalStyles} className='z3 justify_center testId_issue_modal'>
                   <IssueHeader closeModal={this.closeModal}/>
                   <IssueBody />
               </ReactModal>

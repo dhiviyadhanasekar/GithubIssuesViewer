@@ -20,9 +20,15 @@ Running App in Development Mode
 4. Run http://localhost:8090 in browser
 
 
-
 Running unit tests
 1. To run unit tests, run this on the terminal: 'mocha test/unit_tests/'
+
+
+Running selenium tests (default config is dev server)
+1. Once development environment is set up, run 'npm run start' on the terminal from the same folder as the README. 
+Note: This starts the dev server host, that the tests use to lauch the site and run. The test host can be configured to another url by changing the TestConstants file.
+2. Next run 'mocha test/integration_tests/'.
+Note: by default the tests are run using firefox. Make sure firefox is installed. You can change the browser to user in TestConstants file.
 
 
 

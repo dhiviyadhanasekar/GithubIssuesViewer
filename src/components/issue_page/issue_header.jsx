@@ -13,10 +13,10 @@ var IssueHeader = module.exports = React.createClass({
 
         return <div className='black_background white padding_10 relative row' style={{width: 'auto', height: 'auto'}}>
                     <a href={issueUrl} className='white'>
-                        <span>#{IssuesViewStore.getProp('currentIssue')}</span>
-                        <span className='padding_10_left no_underline'>{this.getCurrentIssueDetails('title')}</span>
+                        <span className='testId_modal_issue_number'>#{IssuesViewStore.getProp('currentIssue')}</span>
+                        <span className='padding_10_left no_underline testId_modal_issue_title'>{this.getCurrentIssueDetails('title')}</span>
                     </a> 
-                    <div className='margin_auto_left gray bold pointer' onClick={this.props.closeModal}>X</div>
+                    <div className='margin_auto_left gray bold pointer testId_close_modal' onClick={this.props.closeModal}>X</div>
                 </div>      
     }
 });
