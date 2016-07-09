@@ -3,6 +3,7 @@ Node version v4.4.5
 UI - React, Flux
 URL - React Router
 Unit Testing - mocha
+UI Testing - mocha, selenium
 Styling - SASS (scss), custom CSS, skeleton
 Build - Webpack
 
