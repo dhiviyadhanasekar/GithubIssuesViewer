@@ -3,6 +3,8 @@ https://githubissuesviewer.herokuapp.com/
 
 ## Screenshots
 ![Git issues list](readme_images/issues_list_page.png)
+
+
 ![Git issue details](readme_images/issue_details_page.png)
 
 ## Tech Stack
@@ -58,8 +60,7 @@ Note: by default the tests are run using firefox. Make sure firefox is installed
 4. Issue Page URL:
     a. Issue page can reached by either clicking on the issue number on the default page or by directly using a url like: 'http://localhost:8090/#/gitissues/npm/npm/issues/13267', where 'npm/npm' is the user/repo and '13267' is the issue number
 
-5. Responsive - 
-
+5. Responsive - designed to work on screens with different sizes
 
 
 Project Scope Notes:
