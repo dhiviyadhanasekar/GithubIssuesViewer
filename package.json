@@ -48,12 +48,12 @@
     "webpack-dev-server": "^1.14.1"
   },
   "scripts": {
-    "start": "node server.js", //to start prod server on heroku using files built from  prod-build
+    "start": "node server.js",
     "start-dev": "npm run serve | npm run dev",
     "serve": "./node_modules/.bin/http-server -p 8080",
     "dev": "NODE_ENV=development webpack-dev-server --content-base --progress --colors --inline --hot  --port 8090",
     "build": "webpack --progress --colors",
-    "prod-build": "NODE_ENV=production webpack -p --config ./webpack.production.config.js" //make prod files
+    "prod-build": "NODE_ENV=production webpack -p --config ./webpack.production.config.js"
   },
   "author": "Dhiviya Dhanasekar",
   "license": "ISC"
