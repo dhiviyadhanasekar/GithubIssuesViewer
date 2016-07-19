@@ -10,13 +10,13 @@ Note: The heroku server sleeps when not in use. So when you launch it, it might 
 ![Git issue details](readme_images/issue_details_page.png)
 
 ## Tech Stack
-Node version v4.4.5
-UI - React, Flux
-URL - React Router
-Unit Testing - mocha
-UI Testing - mocha, selenium
-Styling - SASS (scss), custom CSS, skeleton
-Build - Webpack
+Node version v4.4.5  
+UI - React, Flux  
+URL - React Router  
+Unit Testing - mocha  
+UI Testing - mocha, selenium  
+Styling - SASS (scss), custom CSS, skeleton  
+Build - Webpack  
 
 
 ## Testing production ready code
@@ -46,20 +46,20 @@ Note: by default the tests are run using firefox. Make sure firefox is installed
 
 
 ## Features
-1. Default page URL:
-    a. By default the url will be 'http://localhost:8090/#/gitissues/npm/npm/issues'
+1. Default page URL:  
+    a. By default the url will be 'http://localhost:8090/#/gitissues/npm/npm/issues'  
     b. Using the URL, we can change the repo user and repo name by using a url like this: 
         'http://localhost:8090/#/gitissues/dhiviyadhanasekar/GithubIssuesViewer/issues'
         where dhiviyadhanasekar is the repo user and 'GitIssuesViewer' is the repo name.
 
 2. Repo name and user can also be changed in the UI header (next to the git logo), by click on the text, changing it and pressing enter or clicking anywhere out.
 
-3. On default page, 
-    a. hovering over issue number will show a preview of the first 140 characters of the issue body (ending on a clean line or word) - preview display on hover was done to avoid clutter on the default page.
-    b. Clicking on reporter will link to the user's github page
-    c. Clicking on the issue number will bring up the 'Issue Details Page'.
+3. On default page,  
+    a. hovering over issue number will show a preview of the first 140 characters of the issue body (ending on a clean line or word) - preview display on hover was done to avoid clutter on the default page.  
+    b. Clicking on reporter will link to the user's github page  
+    c. Clicking on the issue number will bring up the 'Issue Details Page'.  
 
-4. Issue Page URL:
+4. Issue Page URL:  
     a. Issue page can reached by either clicking on the issue number on the default page or by directly using a url like: 'http://localhost:8090/#/gitissues/npm/npm/issues/13267', where 'npm/npm' is the user/repo and '13267' is the issue number
 
 5. Responsive - designed to work on screens with different sizes
