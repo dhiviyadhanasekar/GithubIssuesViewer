@@ -1,7 +1,7 @@
 ## Demo
 https://githubissuesviewer.herokuapp.com/
 
-Note: The heroku server sleeps when not in use. So when you launch it, it might take a while to start the server and then server the URL
+Note: The heroku server sleeps when not in use. So when you launch it, it might take a while to start the server and then serve the URL.
 
 ## Screenshots
 ![Git issues list](readme_images/issues_list_page.png)
@@ -21,7 +21,7 @@ Build - Webpack
 
 ## Testing production ready code
 1. Install npm and in terminal, navigate to root folder "GithubIssuesViewer/" and run "npm install"  
-2. [DONE] To update static assets for production, on terminal run "npm run prod-build"
+2. To update static assets for production, on terminal run "npm run prod-build"
 3. Launch the local file from assets/index.html to do a sanity check before prod deploy
 4. Alternatively run npm run start and launch localhost:5000 in the browser
 
@@ -38,10 +38,10 @@ Build - Webpack
 
 
 ## Running selenium tests (default config is dev server)
-1. Once development environment is set up, run 'npm run start' on the terminal from the same folder as the README. 
-Note: This starts the dev server host, that the tests use to lauch the site and run. The test host can be configured to another url by changing the TestConstants file.
+1. Once development environment is set up, run 'npm run start' on the terminal from the same folder as the README.
+...Note: This starts the dev server host, that the tests use to lauch the site and run. The test host can be configured to another url by changing the TestConstants file.
 2. Next run 'mocha test/integration_tests/'.
-Note: by default the tests are run using firefox. Make sure firefox is installed. You can change the browser to user in TestConstants file.
+...Note: by default the tests are run using firefox. Make sure firefox is installed. You can change the browser to user a defined one in TestConstants file.
 
 
 
