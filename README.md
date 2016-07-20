@@ -1,7 +1,7 @@
 ## Demo
 https://githubissuesviewer.herokuapp.com/
 
-Note: The heroku server sleeps when not in use. So when you launch it, it might take a while to start the server and then serve the URL.
+Note: The heroku server sleeps when not in use. So when you launch it, it might take a while to start the server and then serve the URL. The initial load time is not due to the application itself.
 
 ## Screenshots
 ![Git issues list](readme_images/issues_list_page.png)
